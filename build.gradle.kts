@@ -17,8 +17,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.infernalsuite.aswm:api:1.20.4-R0.1-SNAPSHOT") // slime worlds api
-    paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT") // paper dependency
+    compileOnly("com.infernalsuite.aswm:api:1.20.6-R0.1-SNAPSHOT") // slime worlds api
+    paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT") // paper dependency
 
     // fawe requirement for region manipulation
     implementation(platform("com.intellectualsites.bom:bom-newest:1.45")) // Ref: https://github.com/IntellectualSites/bom
