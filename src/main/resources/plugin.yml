@@ -1,0 +1,12 @@
+# plugin information
+name: $name
+description: $description
+authors:
+  - msvae
+version: $version
+
+# load information
+main: io.github.sylviameows.flask.Flask
+api-version: $apiVersion
+prefix: "Flask"
+load: POSTWORLD
