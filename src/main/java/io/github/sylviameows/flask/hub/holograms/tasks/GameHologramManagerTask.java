@@ -51,6 +51,9 @@ public final class GameHologramManagerTask extends BukkitRunnable {
             hologram.setVisibleByDefault(false);
 
             new GameHologramShowTask(hologram, 20, game.getPlugin());
+
+            player.showEntity(game.getPlugin(), hologram);
+            holograms.put(player.getName(), hologram);
         }
 
         // remove players too far from hologram
