@@ -6,7 +6,7 @@ import org.bukkit.plugin.Plugin;
 
 public abstract class Game {
     private final Plugin plugin;
-    public Settings settings;
+    private Settings settings;
 
     private NamespacedKey key;
 
