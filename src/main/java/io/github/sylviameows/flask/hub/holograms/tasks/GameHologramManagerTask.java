@@ -41,7 +41,7 @@ public final class GameHologramManagerTask extends BukkitRunnable {
 
         // get nearby players
         var players = location.getNearbyPlayers(2.8);
-        if (players.isEmpty()) return;
+        if (players.isEmpty() && holograms.isEmpty()) return;
 
         // add new players without holograms
         for (Player player : players) {
@@ -50,7 +50,7 @@ public final class GameHologramManagerTask extends BukkitRunnable {
             TextDisplay hologram = spawnText();
             hologram.setVisibleByDefault(false);
 
-            new GameHologramShowTask(hologram, 20, game.getPlugin());
+            new GameHologramShowTask(hologram, 20, game.getPlugin()).runTask(game.getPlugin());
 
             player.showEntity(game.getPlugin(), hologram);
             holograms.put(player.getName(), hologram);
@@ -62,7 +62,7 @@ public final class GameHologramManagerTask extends BukkitRunnable {
             if (names.contains(name)) continue;
 
             TextDisplay hologram = holograms.get(name);
-            new GameHologramHideTask(hologram, 15, game.getPlugin());
+            new GameHologramHideTask(hologram, 15, game.getPlugin()).runTask(game.getPlugin());
             holograms.remove(name);
         }
 

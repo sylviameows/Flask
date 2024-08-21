@@ -9,7 +9,7 @@ public class GameHologramHideTask extends GameHologramAnimationTask {
         super(display,tick,end,start, plugin);
     }
     public GameHologramHideTask(TextDisplay display, int end, Plugin plugin) {
-        super(display, 0, end, display.getTransformation().getTranslation().y - 0.15f, plugin);
+        super(display, 0, end, display.getTransformation().getTranslation().y, plugin);
     }
 
     @Override
@@ -17,8 +17,8 @@ public class GameHologramHideTask extends GameHologramAnimationTask {
         // easing calculations
         double ease = ease((double) tick / end);
         double opacity = 256 - (250 * ease);
-        double alpha = 112 - (112*ease);
-        float change = 0.15f * (float)ease;
+        double alpha = 112 - (112 * ease);
+        float change = 0.15f * (float) ease;
 
         // update entity
         updateHologram(opacity, alpha, change);
