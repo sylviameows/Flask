@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 abstract class Registry<T> {
     private final Map<NamespacedKey, T> map;
 
-    private Registry() {
+    protected Registry() {
         this.map = new ConcurrentHashMap<>();
     }
 

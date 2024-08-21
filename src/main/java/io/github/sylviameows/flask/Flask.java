@@ -1,5 +1,7 @@
 package io.github.sylviameows.flask;
 
+import io.github.sylviameows.flask.examples.ExampleGame;
+import io.github.sylviameows.flask.registries.GameRegistry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -25,6 +27,11 @@ public class Flask extends JavaPlugin {
         for (Component component : motd()) {
             logger.info(component);
         }
+
+        // registry testing
+        var games = GameRegistry.instance();
+        games.add(this, "example", new ExampleGame(this));
+        logger.info(games.get(this, "example").settings.getName());
     }
 
     /**
