@@ -7,4 +7,13 @@ public class GameRegistry extends Registry<Game> {
     public static GameRegistry instance() {
         return instance;
     }
+
+    public Game add(Game game) {
+        if (game.getKey() == null) return null;
+        return map.put(game.getKey(), game);
+    }
+    public Game remove(Game game) {
+        if (game.getKey() == null) return null;
+        return map.remove(game.getKey());
+    }
 }
