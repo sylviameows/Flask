@@ -2,6 +2,7 @@ package io.github.sylviameows.flask.listeners;
 
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.Game;
+import io.github.sylviameows.flask.managers.PlayerManager;
 import io.github.sylviameows.flask.registries.GameRegistry;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -30,16 +31,23 @@ public class RightClickEntity implements Listener {
                     pdc.get(new NamespacedKey("flask", "special"), PersistentDataType.STRING),
                     "hologram_interaction")
             ) return;
+
+            Player player = event.getPlayer();
+            if (PlayerManager.instance().get(player).isOccupied()) {
+                player.sendMessage("You are already occupied!");
+                return;
+            }
+
             String gameKeyString = pdc.get(new NamespacedKey("flask", "game"), PersistentDataType.STRING);
             if (gameKeyString == null) return;
             Game game = GameRegistry.instance().get(NamespacedKey.fromString(gameKeyString));
-            Player player = event.getPlayer();
             if (game == null) {
                 player.sendMessage("Could not find the game \""+gameKeyString+"\", if you believe this is an error contact your server's administrator."); // TODO: service?
                 return;
             }
 
             // add player to queue
+            PlayerManager.instance().get(player).setGame(game);
             player.sendMessage(
                     Component.text("Joining ").append(
                             Component.text(game.getSettings().getName())

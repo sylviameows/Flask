@@ -2,6 +2,8 @@ package io.github.sylviameows.flask;
 
 import io.github.sylviameows.flask.examples.ExampleGame;
 import io.github.sylviameows.flask.hub.holograms.GameHologram;
+import io.github.sylviameows.flask.listeners.JoinListener;
+import io.github.sylviameows.flask.listeners.LeaveListener;
 import io.github.sylviameows.flask.listeners.RightClickEntity;
 import io.github.sylviameows.flask.registries.GameRegistry;
 import net.kyori.adventure.text.Component;
@@ -32,11 +34,13 @@ public class Flask extends JavaPlugin {
 
         var games = GameRegistry.instance();
         new ExampleGame(this).register("example");
-        logger.info("Registered game: "+games.get(this, "example").settings.getName());
+        logger.info("Registered game: "+games.get(this, "example").getSettings().getName());
 
         GameHologram.load();
 
         RightClickEntity.register(this);
+        JoinListener.register(this);
+        LeaveListener.register(this);
 
         var location = new Location(Bukkit.getWorld("world"), 7.5, -59.0, -3.5);
 //        new GameHologram(games.get(this, "example"), location);
