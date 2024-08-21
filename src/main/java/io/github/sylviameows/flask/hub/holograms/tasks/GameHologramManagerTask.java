@@ -5,6 +5,7 @@ import io.github.sylviameows.flask.game.Game;
 import io.github.sylviameows.flask.game.Settings;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -104,7 +105,7 @@ public final class GameHologramManagerTask extends BukkitRunnable {
                 .appendNewline()
                 .append(Component.text("(# in queue)").color(Palette.GRAY))
                 .appendNewline().appendNewline()
-                .append(Component.text(settings.getDescription()).color(Palette.WHITE))
+                .append(MiniMessage.miniMessage().deserialize(settings.getDescription()).colorIfAbsent(Palette.WHITE))
                 .appendNewline().appendNewline()
                 .append(Component.text("⏵ ").color(settings.getColor()))
                 .append(Component.text("Join Game").color(Palette.WHITE))

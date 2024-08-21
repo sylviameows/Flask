@@ -33,23 +33,23 @@ public class Flask extends JavaPlugin {
         new ExampleGame(this).register("example");
         logger.info("Registered game: "+games.get(this, "example").settings.getName());
 
+        GameHologram.load();
+
         var location = new Location(Bukkit.getWorld("world"), 7.5, -59.0, -3.5);
-        new GameHologram(games.get(this, "example"), location);
+//        new GameHologram(games.get(this, "example"), location);
 
         // display plugin loaded message (aka motd)
         for (Component component : motd()) {
             logger.info(component);
         }
-
-        // registry testing
-
-
-
     }
 
     @Override
     public void onDisable() {
+        purgeFlaskEntities();
+    }
 
+    private void purgeFlaskEntities() {
         logger.info("Purging flask entities...");
         var worlds = Bukkit.getWorlds();
         for (World world : worlds) {
