@@ -2,6 +2,7 @@ package io.github.sylviameows.flask;
 
 import io.github.sylviameows.flask.examples.ExampleGame;
 import io.github.sylviameows.flask.hub.holograms.GameHologram;
+import io.github.sylviameows.flask.listeners.RightClickEntity;
 import io.github.sylviameows.flask.registries.GameRegistry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
@@ -34,6 +35,8 @@ public class Flask extends JavaPlugin {
         logger.info("Registered game: "+games.get(this, "example").settings.getName());
 
         GameHologram.load();
+
+        RightClickEntity.register(this);
 
         var location = new Location(Bukkit.getWorld("world"), 7.5, -59.0, -3.5);
 //        new GameHologram(games.get(this, "example"), location);
