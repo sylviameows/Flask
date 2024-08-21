@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.Plugin;
 
 public abstract class Game {
-    private Plugin plugin;
+    private final Plugin plugin;
     public Settings settings;
 
     private NamespacedKey key;
