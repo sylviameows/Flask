@@ -6,6 +6,10 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
+import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +36,24 @@ public class Flask extends JavaPlugin {
         var games = GameRegistry.instance();
         games.add(this, "example", new ExampleGame(this));
         logger.info(games.get(this, "example").settings.getName());
+    }
+
+    @Override
+    public void onDisable() {
+
+        logger.info("Purging flask entities...");
+        var worlds = Bukkit.getWorlds();
+        for (World world : worlds) {
+            var purge = world.getEntities().stream().filter(entity ->
+                    entity.getPersistentDataContainer().has(new NamespacedKey("flask", "purge"))
+            ).toList();
+            var count = purge.size();
+            if (count > 0) {
+                purge.forEach(Entity::remove);
+                logger.info("Purged "+count+" flask entities from "+world.getName());
+            }
+        }
+        logger.info("Flask entities purged!");
     }
 
     /**
