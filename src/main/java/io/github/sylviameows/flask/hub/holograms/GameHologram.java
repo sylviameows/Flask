@@ -10,6 +10,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
+import org.bukkit.util.Vector;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -30,7 +31,7 @@ public class GameHologram {
     public GameHologram(Game game, Location location) throws IllegalArgumentException {
         if (game.getKey() == null) throw new IllegalArgumentException("Provided game is not registered!");
         this.game = game;
-        this.location = location;
+        this.location = location.toCenterLocation().setDirection(new Vector(1,0,0));
         this.uuid = UUID.randomUUID();
 
         display = spawnDisplay();

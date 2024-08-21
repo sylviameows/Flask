@@ -1,12 +1,14 @@
 package io.github.sylviameows.flask;
 
 import io.github.sylviameows.flask.examples.ExampleGame;
+import io.github.sylviameows.flask.hub.holograms.GameHologram;
 import io.github.sylviameows.flask.registries.GameRegistry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -27,15 +29,22 @@ public class Flask extends JavaPlugin {
     public void onEnable() {
         logger = getComponentLogger();
 
+        var games = GameRegistry.instance();
+        new ExampleGame(this).register("example");
+        logger.info("Registered game: "+games.get(this, "example").settings.getName());
+
+        var location = new Location(Bukkit.getWorld("world"), 7.5, -59.0, -3.5);
+        new GameHologram(games.get(this, "example"), location);
+
         // display plugin loaded message (aka motd)
         for (Component component : motd()) {
             logger.info(component);
         }
 
         // registry testing
-        var games = GameRegistry.instance();
-        games.add(this, "example", new ExampleGame(this));
-        logger.info(games.get(this, "example").settings.getName());
+
+
+
     }
 
     @Override
