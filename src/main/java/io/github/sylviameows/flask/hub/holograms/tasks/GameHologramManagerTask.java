@@ -101,9 +101,9 @@ public final class GameHologramManagerTask extends BukkitRunnable {
     private Component getHologramComponent() {
         Settings settings = game.getSettings();
         return Component.text(settings.getName()).color(settings.getColor())
-                .append(Component.text(" • "+/* TODO playercount */"# players").color(Palette.WHITE))
+                .append(Component.text(" • "+game.getQueue().getTotalPlayers()+" players").color(Palette.WHITE))
                 .appendNewline()
-                .append(Component.text("(# in queue)").color(Palette.GRAY))
+                .append(Component.text("("+game.getQueue().getSizeOfQueue()+" in queue)").color(Palette.GRAY))
                 .appendNewline().appendNewline()
                 .append(MiniMessage.miniMessage().deserialize(settings.getDescription()).colorIfAbsent(Palette.WHITE))
                 .appendNewline().appendNewline()

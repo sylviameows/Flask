@@ -7,12 +7,17 @@ import org.bukkit.plugin.Plugin;
 public abstract class Game {
     private final Plugin plugin;
     private Settings settings;
+    private final Queue<?> queue;
 
     private NamespacedKey key;
+
+    private Integer totalPlayers;
 
     protected Game(Plugin plugin, Settings settings) {
         this.plugin = plugin;
         this.settings = settings;
+
+        this.queue = new Queue<>(this);
     }
 
     public boolean register(String key) {
@@ -27,6 +32,9 @@ public abstract class Game {
 
     public Settings getSettings() {
         return settings;
+    }
+    public Queue<?> getQueue() {
+        return queue; 
     }
     public NamespacedKey getKey() {
         return key;

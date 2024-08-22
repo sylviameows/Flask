@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class FlaskPlayer {
 //    private final Player player; // should probably NOT do this.
 
-    private NamespacedKey game = null;
+    private Game game = null;
     private Lobby<?> lobby = null;
 
     public FlaskPlayer(Player player) {
@@ -21,10 +21,22 @@ public class FlaskPlayer {
     }
 
     public void setGame(Game game) {
-        this.game = game.getKey();
+        this.game = game;
     }
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+    public Lobby<?> getLobby() {
+        return lobby;
+    }
+
+    public void reset() {
+        this.game = null;
+        this.lobby = null;
     }
 
     public boolean isOccupied() {

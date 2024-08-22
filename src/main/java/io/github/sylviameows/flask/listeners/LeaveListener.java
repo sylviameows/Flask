@@ -4,6 +4,7 @@ import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.managers.PlayerManager;
 import io.github.sylviameows.flask.players.FlaskPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -16,17 +17,23 @@ public class LeaveListener implements Listener {
 
     @EventHandler
     private void quit(PlayerQuitEvent event) {
-        var flaskPlayer = PlayerManager.instance().remove(event.getPlayer());
-        handleDisconnect(flaskPlayer);
+        handleDisconnect(event.getPlayer());
     }
 
     @EventHandler
     private void quit(PlayerKickEvent event) {
-        var flaskPlayer = PlayerManager.instance().remove(event.getPlayer());
-        handleDisconnect(flaskPlayer);
+        handleDisconnect(event.getPlayer());
     }
 
-    private void handleDisconnect(FlaskPlayer player) {
+    private void handleDisconnect(Player player) {
+        var flask = PlayerManager.instance().get(player);
+        var game = flask.getGame();
+        if (game != null) {
+            game.getQueue().leave(player);
+        }
+
+        var lobby = flask.getLobby();
+
         // todo get game and lobby and fire disconnect event.
     }
 }
