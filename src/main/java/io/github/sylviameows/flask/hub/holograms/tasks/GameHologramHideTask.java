@@ -1,6 +1,5 @@
 package io.github.sylviameows.flask.hub.holograms.tasks;
 
-import org.bukkit.Color;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.plugin.Plugin;
 

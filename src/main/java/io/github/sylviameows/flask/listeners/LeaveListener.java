@@ -2,7 +2,6 @@ package io.github.sylviameows.flask.listeners;
 
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.managers.PlayerManager;
-import io.github.sylviameows.flask.players.FlaskPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

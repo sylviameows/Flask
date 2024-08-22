@@ -4,7 +4,6 @@ import io.github.sylviameows.flask.Palette;
 import io.github.sylviameows.flask.game.Game;
 import io.github.sylviameows.flask.game.Settings;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Color;
 import org.bukkit.Location;
