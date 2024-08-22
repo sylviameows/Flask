@@ -10,9 +10,9 @@ public class Queue<G extends Game> {
     private final G parent;
 
     private Integer totalPlayers;
-    private List<Player> queue;
+    private final List<Player> queue;
 
-    private PlayerManager pm = PlayerManager.instance();
+    private final PlayerManager pm = PlayerManager.instance();
 
     public Queue(G game) {
         this.parent = game;
@@ -45,4 +45,8 @@ public class Queue<G extends Game> {
     }
 
     // todo: queue task?
+
+    public void checkStatus() {
+
+    }
 }

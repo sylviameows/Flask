@@ -24,7 +24,7 @@ public class GameHologram {
     private final Game game;
     private final Location location;
 
-    private final UUID uuid; // TODO append to attached entities somehow?
+    private final UUID uuid;
 
     private final ItemDisplay display;
     private final Interaction interaction;
@@ -57,7 +57,6 @@ public class GameHologram {
         logger.info("Initialized "+(selected.size()-failures)+" hologram(s) successfully.");
     }
 
-    // TODO: generate from item display maybe?
     public GameHologram(Game game, Location location) throws IllegalArgumentException {
         if (game.getKey() == null) throw new IllegalArgumentException("Provided game is not registered!");
         this.game = game;
