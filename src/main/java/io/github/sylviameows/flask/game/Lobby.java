@@ -18,6 +18,15 @@ public class Lobby<G extends Game> {
         this.phase = parent.initialPhase();
     }
 
+    // todo: call function in phase
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    public void removePlayer(Player player) {
+        players.remove(player);
+    }
+
 
     public Phase getPhase() {
         return phase;

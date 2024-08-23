@@ -27,7 +27,7 @@ public abstract class Game {
         return true;
     }
 
-    abstract public void createLobby();
+    abstract public Lobby<?> createLobby();
     abstract public Phase initialPhase();
 
     public Settings getSettings() {

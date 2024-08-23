@@ -21,8 +21,8 @@ public class ExampleGame extends Game {
     }
 
     @Override
-    public void createLobby() {
-        new Lobby<>(this);
+    public Lobby<ExampleGame> createLobby() {
+        return new Lobby<>(this);
     }
 
     @Override
