@@ -32,6 +32,9 @@ public class LeaveListener implements Listener {
         }
 
         var lobby = flask.getLobby();
+        if (lobby != null) {
+            lobby.removePlayer(player);
+        }
 
         // todo get game and lobby and fire disconnect event.
     }

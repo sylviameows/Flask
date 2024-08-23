@@ -1,5 +1,6 @@
 package io.github.sylviameows.flask.game;
 
+import io.github.sylviameows.flask.managers.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -20,10 +21,12 @@ public class Lobby<G extends Game> {
 
     // todo: call function in phase
     public void addPlayer(Player player) {
+        PlayerManager.instance().get(player).setLobby(this);
         players.add(player);
     }
 
     public void removePlayer(Player player) {
+        PlayerManager.instance().get(player).setLobby(null);
         players.remove(player);
     }
 
