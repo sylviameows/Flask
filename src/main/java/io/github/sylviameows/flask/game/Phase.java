@@ -9,8 +9,8 @@ public interface Phase extends Listener {
     void onEnabled(Lobby<?> parent);
     void onDisabled();
 
-    void onPlayerJoin(Player player);
-    void onPlayerLeave(Player player);
+    default void onPlayerJoin(Player player) {}
+    default void onPlayerLeave(Player player) {}
 
     Phase next();
 }

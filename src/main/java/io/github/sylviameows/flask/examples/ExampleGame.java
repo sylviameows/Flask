@@ -6,27 +6,35 @@ import io.github.sylviameows.flask.game.Lobby;
 import io.github.sylviameows.flask.game.Phase;
 import io.github.sylviameows.flask.game.Settings;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExampleGame extends Game {
+    private final List<Lobby<ExampleGame>> lobbies = new ArrayList<>();
+
     public ExampleGame(Plugin plugin) {
         super(plugin, Settings.of(
-                "Example",
-                "Change this example to fit <bold>your</bold> game's needs!",
+                "Sword Duel",
+                "Fight against another player using only a sword.",
                 Palette.MINT,
-                Material.ENDER_EYE,
+                Material.WOODEN_SWORD,
                 2,
                 2
         ));
     }
 
     @Override
-    public Lobby<ExampleGame> createLobby() {
-        return new Lobby<>(this);
+    public Lobby<ExampleGame> createLobby(List<Player> players) {
+        var lobby = new Lobby<>(this, players);
+        lobbies.add(lobby);
+        return lobby;
     }
 
     @Override
     public Phase initialPhase() {
-        return new ExamplePhase();
+        return new ExampleStartingPhase();
     }
 }

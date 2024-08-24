@@ -7,16 +7,30 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Lobby<G extends Game> {
     protected final G parent;
 
-    public ArrayList<Player> players;
-    private Phase phase;
+    public List<Player> players;
+    private @NotNull Phase phase;
 
     public Lobby(G parent) {
         this.parent = parent;
+        this.players = new ArrayList<>();
+
         this.phase = parent.initialPhase();
+        this.phase.onEnabled(this);
+        Bukkit.getPluginManager().registerEvents(this.phase, parent.getPlugin());
+    }
+
+    public Lobby(G parent, List<Player> players) {
+        this.parent = parent;
+        this.players = players;
+
+        this.phase = parent.initialPhase();
+        this.phase.onEnabled(this);
+        Bukkit.getPluginManager().registerEvents(this.phase, parent.getPlugin());
     }
 
     // todo: call function in phase
@@ -34,20 +48,17 @@ public class Lobby<G extends Game> {
     public Phase getPhase() {
         return phase;
     }
-    public void setPhase(@NotNull Phase phase) {
-        if (this.phase != null) {
-            this.phase.onDisabled();
-
-            HandlerList.unregisterAll(this.phase);
-        }
+    public void updatePhase(@NotNull Phase phase) {
+        this.phase.onDisabled();
+        HandlerList.unregisterAll(this.phase);
 
         this.phase = phase;
-        this.phase.onEnabled(this);
 
+        this.phase.onEnabled(this);
         Bukkit.getPluginManager().registerEvents(this.phase, parent.getPlugin());
     }
 
     public void nextPhase() {
-        setPhase(this.phase.next());
+        updatePhase(this.phase.next());
     }
 }

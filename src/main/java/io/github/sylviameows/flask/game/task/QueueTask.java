@@ -1,9 +1,12 @@
 package io.github.sylviameows.flask.game.task;
 
+import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.Queue;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QueueTask extends BukkitRunnable {
@@ -15,7 +18,7 @@ public class QueueTask extends BukkitRunnable {
     private final int min;
 
     public QueueTask(Queue<?> queue, List<Player> players) {
-        this.players = players;
+        this.players = new ArrayList<>(players); // clones the list
         this.parent = queue;
 
         this.max = parent.getParent().getSettings().getMaxPlayers();
@@ -33,7 +36,7 @@ public class QueueTask extends BukkitRunnable {
         return players.remove(player);
     }
 
-    public Integer size() {
+    public int size() {
         return players.size();
     }
 
@@ -45,10 +48,8 @@ public class QueueTask extends BukkitRunnable {
 
         boolean full = players.size() >= max;
         if (count > 10 || full) {
-            var lobby = parent.getParent().createLobby();
-            for (Player player : players) {
-                lobby.addPlayer(player);
-            }
+            Flask.logger.info("Creating Lobby for "+players);
+            parent.getParent().createLobby(players);
             this.clear();
         }
 

@@ -3,6 +3,7 @@ package io.github.sylviameows.flask.game;
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.task.QueueTask;
 import io.github.sylviameows.flask.managers.PlayerManager;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -29,8 +30,8 @@ public class Queue<G extends Game> {
         totalPlayers++;
 
         Integer minimum = parent.getSettings().getMinPlayers();
-
         if (queue.size() + 1 >= minimum && (task == null || task.isCancelled())) {
+            queue.add(player);
 
             task = new QueueTask(this, queue);
             task.runTaskTimer(parent.getPlugin(), 0L, 20L);

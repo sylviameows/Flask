@@ -2,7 +2,10 @@ package io.github.sylviameows.flask.game;
 
 import io.github.sylviameows.flask.registries.GameRegistry;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import java.util.List;
 
 public abstract class Game {
     private final Plugin plugin;
@@ -27,7 +30,7 @@ public abstract class Game {
         return true;
     }
 
-    abstract public Lobby<?> createLobby();
+    abstract public Lobby<?> createLobby(List<Player> players);
     abstract public Phase initialPhase();
 
     public Settings getSettings() {
