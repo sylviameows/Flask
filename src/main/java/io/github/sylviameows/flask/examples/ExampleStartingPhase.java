@@ -1,8 +1,8 @@
 package io.github.sylviameows.flask.examples;
 
-import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.Lobby;
 import io.github.sylviameows.flask.game.Phase;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Material;

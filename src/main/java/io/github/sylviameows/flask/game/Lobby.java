@@ -1,9 +1,11 @@
 package io.github.sylviameows.flask.game;
 
+import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.managers.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -20,8 +22,8 @@ public class Lobby<G extends Game> {
         this.players = new ArrayList<>();
 
         this.phase = parent.initialPhase();
-        this.phase.onEnabled(this);
         Bukkit.getPluginManager().registerEvents(this.phase, parent.getPlugin());
+        this.phase.onEnabled(this);
     }
 
     public Lobby(G parent, List<Player> players) {
@@ -59,6 +61,11 @@ public class Lobby<G extends Game> {
     }
 
     public void nextPhase() {
-        updatePhase(this.phase.next());
+        Phase nextPhase = phase.next();
+        if (nextPhase == null) {
+            Flask.logger.error("Next phase is not defined, aborting next phase action...");
+            return;
+        }
+        updatePhase(nextPhase);
     }
 }
