@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Lobby<G extends Game> {
     protected final G parent;
@@ -44,6 +45,19 @@ public class Lobby<G extends Game> {
     public void removePlayer(Player player) {
         PlayerManager.instance().get(player).setLobby(null);
         players.remove(player);
+    }
+
+    public void closeLobby() {
+        phase.onDisabled();
+        HandlerList.unregisterAll(phase);
+
+        // todo: replace with a requeue feature?
+        players.forEach(parent.getQueue()::leave);
+    }
+
+    public void closeLobby(Consumer<Player> consumer) {
+        players.forEach(consumer);
+        closeLobby();
     }
 
 

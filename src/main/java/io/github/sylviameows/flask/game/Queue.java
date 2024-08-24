@@ -3,6 +3,7 @@ package io.github.sylviameows.flask.game;
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.task.QueueTask;
 import io.github.sylviameows.flask.managers.PlayerManager;
+import io.github.sylviameows.flask.players.FlaskPlayer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
@@ -44,12 +45,13 @@ public class Queue<G extends Game> {
     }
 
     public void leave(Player player) {
-        pm.remove(player).reset();
-        queue.remove(player);
-
-        if (task != null) task.remove(player);
-
-        totalPlayers--;
+        FlaskPlayer flaskPlayer = pm.get(player);
+        if (flaskPlayer.getGame() == this.parent) {
+            flaskPlayer.reset();
+            queue.remove(player);
+            if (task != null) task.remove(player);
+            totalPlayers--;
+        }
     }
 
     public Integer getTotalPlayers() {

@@ -32,7 +32,11 @@ public class ExampleEndingPhase implements Phase {
         parent.players.forEach(this::ending);
 
         // close lobby after 5.
-        Bukkit.getScheduler().runTaskLater(parent.getParent().getPlugin(), this::close, 100L);
+        Bukkit.getScheduler().runTaskLater(parent.getParent().getPlugin(), () -> {
+            parent.closeLobby(player -> {
+                player.setGameMode(GameMode.ADVENTURE);
+            });
+        }, 100L);
     }
 
     private void ending(Player player) {
@@ -66,17 +70,13 @@ public class ExampleEndingPhase implements Phase {
         ));
     }
 
-    private void close() {
+    @Override
+    public void onDisabled() {
         parent.players.forEach(player -> {
             player.setGameMode(GameMode.ADVENTURE);
             // todo: teleport to lobby?
             // todo: close lobby.
         });
-    }
-
-    @Override
-    public void onDisabled() {
-        // unreachable, will never "disable"
     }
 
     @EventHandler
