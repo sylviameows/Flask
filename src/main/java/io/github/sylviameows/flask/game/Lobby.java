@@ -51,7 +51,7 @@ public class Lobby<G extends Game> {
         HandlerList.unregisterAll(phase);
 
         // todo: replace with a requeue feature?
-        players.forEach(parent.getQueue()::leave);
+        players.forEach(parent.getQueue()::removePlayer);
     }
 
     public void closeLobby(Consumer<Player> consumer) {

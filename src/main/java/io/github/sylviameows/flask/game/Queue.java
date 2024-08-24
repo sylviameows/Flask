@@ -9,6 +9,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages the players that join a game and sends them to a lobby when one is
+ * available and meets the requirements in the game's {@link Settings}.
+ * @param <G> the {@link Game} type this queue is meant for.
+ */
 public class Queue<G extends Game> {
     private final G parent;
 
@@ -25,7 +30,10 @@ public class Queue<G extends Game> {
         this.queue = new ArrayList<>();
     }
 
-    public void join(Player player) {
+    /**
+     * Adds a player into the queue. Additionally, updates the {@link FlaskPlayer} instance of this player.
+     */
+    public void addPlayer(Player player) {
         pm.get(player).setGame(parent);
         totalPlayers++;
 
@@ -45,7 +53,10 @@ public class Queue<G extends Game> {
         }
     }
 
-    public void leave(Player player) {
+    /**
+     * Removes a player from the queue. Additionally, updates the {@link FlaskPlayer} instance of this player.
+     */
+    public void removePlayer(Player player) {
         FlaskPlayer flaskPlayer = pm.get(player);
         if (flaskPlayer.getGame() == this.parent) {
             flaskPlayer.reset();
@@ -55,8 +66,11 @@ public class Queue<G extends Game> {
         }
     }
 
+    /**
+     * Fills a {@link QueueTask} with players from the queue until it is full, or the queue runs out of players.
+     * @param task the {@link QueueTask} to fill.
+     */
     public void fill(@NotNull QueueTask task) {
-        Integer minimum = parent.getSettings().getMinPlayers();
         Integer maximum = parent.getSettings().getMaxPlayers();
 
         while (task.size() < maximum && !queue.isEmpty()) {
@@ -64,10 +78,16 @@ public class Queue<G extends Game> {
         }
     }
 
+    /**
+     * @return the total number of players in this game (includes the players in queue).
+     */
     public Integer getTotalPlayers() {
         return totalPlayers;
     }
 
+    /**
+     * @return the number of players in the queue, and not actively in a lobby.
+     */
     public Integer getQueueSize() {
         if (task != null && !task.isCancelled()) {
             return queue.size() + task.size();
@@ -75,6 +95,9 @@ public class Queue<G extends Game> {
         return queue.size();
     }
 
+    /**
+     * @return the number of players actively in a lobby, and not in a queue.
+     */
     public Integer getPlayingCount() {
         return totalPlayers - getQueueSize();
     }

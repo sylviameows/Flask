@@ -3,6 +3,9 @@ package io.github.sylviameows.flask.managers;
 import io.github.sylviameows.flask.players.FlaskPlayer;
 import org.bukkit.entity.Player;
 
+/**
+ * Links Bukkit player instances to a {@link FlaskPlayer} object for ease of tracking.
+ */
 public class PlayerManager extends Manager<FlaskPlayer> {
     private static final PlayerManager instance = new PlayerManager();
     public static PlayerManager instance() {

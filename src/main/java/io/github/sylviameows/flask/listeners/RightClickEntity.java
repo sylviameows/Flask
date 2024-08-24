@@ -47,7 +47,7 @@ public class RightClickEntity implements Listener {
             }
 
             // add player to queue
-            game.getQueue().join(player);
+            game.getQueue().addPlayer(player);
             player.sendMessage(
                     Component.text("Joining ").append(
                             Component.text(game.getSettings().getName())

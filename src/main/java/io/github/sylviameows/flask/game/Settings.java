@@ -4,6 +4,12 @@ import io.github.sylviameows.flask.Palette;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 
+/**
+ * These are the base settings of a minigame, which tells Flask how to
+ * handle the display and function of your minigame. It is recommended to
+ * use the {@link SettingsBuilder} class to create this object which can
+ * be created with the {@link Settings#builder()} method.
+ */
 public class Settings {
     // display options
     private final String name;
@@ -45,10 +51,23 @@ public class Settings {
         return minPlayers;
     }
 
+    /**
+     * @return an instance of {@link SettingsBuilder}.
+     */
     public static SettingsBuilder builder() {
         return new SettingsBuilder();
     }
 
+    /**
+     * Generates a {@link Settings} object using the provided values.
+     * @param name a name to describe your game
+     * @param description a short description to explain your game
+     * @param color the "highlight" color to use
+     * @param icon the icon to use in new holograms
+     * @param max the maximum number of players per lobby
+     * @param min the minimum number of players per lobby
+     * @return a {@link Settings} object with the provided parameters.
+     */
     public static Settings of(String name, String description, TextColor color, Material icon, Integer max, Integer min) {
         return new SettingsBuilder()
                 .setName(name)
@@ -60,6 +79,9 @@ public class Settings {
                 .build();
     }
 
+    /**
+     * Builder class for the {@link Settings} object.
+     */
     public static class SettingsBuilder {
         // display options
         private String name = "Unknown";
@@ -69,36 +91,61 @@ public class Settings {
 
         // game options
         private Integer maxPlayers = 8;
-        private Integer minPlayers = 1;
+        private Integer minPlayers = 2;
 
         public SettingsBuilder() {}
 
+        /**
+         *  default value: "Unknown"
+         */
         public SettingsBuilder setName(String name) {
             this.name = name;
             return this;
         }
+
+        /**
+         *  default value: ""
+         */
         public SettingsBuilder setDescription(String description) {
             this.description = description;
             return this;
         }
+
+        /**
+         *  default value: {@link Palette#WHITE}
+         */
         public SettingsBuilder setColor(TextColor color) {
             this.color = color;
             return this;
         }
+
+        /**
+         *  default value: {@link Material#ENDER_PEARL}
+         */
         public SettingsBuilder setIcon(Material icon) {
             this.icon = icon;
             return this;
         }
 
+        /**
+         *  default value: 8
+         */
         public SettingsBuilder setMaxPlayers(Integer max) {
             this.maxPlayers = max;
             return this;
         }
+
+        /**
+         *  default value: 2
+         */
         public SettingsBuilder setMinPlayers(Integer min) {
             this.minPlayers = min;
             return this;
         }
 
+        /**
+         * @return a new {@link Settings} object with the specified settings.
+         */
         public Settings build() {
             return new Settings(this);
         }

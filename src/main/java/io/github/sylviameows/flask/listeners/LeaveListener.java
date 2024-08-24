@@ -28,7 +28,7 @@ public class LeaveListener implements Listener {
         var flask = PlayerManager.instance().get(player);
         var game = flask.getGame();
         if (game != null) {
-            game.getQueue().leave(player);
+            game.getQueue().removePlayer(player);
         }
 
         var lobby = flask.getLobby();
