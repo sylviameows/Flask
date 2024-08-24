@@ -49,7 +49,7 @@ public class QueueTask extends BukkitRunnable {
         boolean full = players.size() >= max;
         if (count > 10 || full) {
             Flask.logger.info("Creating Lobby for "+players);
-            parent.getParent().createLobby(players);
+            parent.getParent().createLobby(new ArrayList<>(players));
             this.clear();
         }
 

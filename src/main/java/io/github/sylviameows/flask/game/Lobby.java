@@ -31,8 +31,8 @@ public class Lobby<G extends Game> {
         this.players = players;
 
         this.phase = parent.initialPhase();
-        this.phase.onEnabled(this);
         Bukkit.getPluginManager().registerEvents(this.phase, parent.getPlugin());
+        this.phase.onEnabled(this);
     }
 
     // todo: call function in phase
@@ -67,5 +67,9 @@ public class Lobby<G extends Game> {
             return;
         }
         updatePhase(nextPhase);
+    }
+
+    public G getParent() {
+        return parent;
     }
 }

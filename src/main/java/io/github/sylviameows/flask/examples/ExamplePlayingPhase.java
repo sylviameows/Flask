@@ -1,8 +1,8 @@
 package io.github.sylviameows.flask.examples;
 
-import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.Lobby;
 import io.github.sylviameows.flask.game.Phase;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -42,19 +42,18 @@ public class ExamplePlayingPhase implements Phase {
     @EventHandler
     private void onDeath(EntityDeathEvent event) {
         if (event.getEntity() instanceof Player player) {
-            Flask.logger.info("on_death");
-            Flask.logger.info(nextPhase.toString());
             if (player == playerA) {
                 nextPhase.setWinner(playerB);
-                event.setCancelled(true);
-                player.setHealth(20.0);
                 parent.nextPhase();
             } else if (player == playerB) {
                 nextPhase.setWinner(playerA);
-                event.setCancelled(true);
-                player.setHealth(20.0);
                 parent.nextPhase();
+            } else {
+                return;
             }
+            event.setCancelled(true);
+            player.setHealth(20.0);
+            player.setGameMode(GameMode.SPECTATOR);
         }
     }
 
