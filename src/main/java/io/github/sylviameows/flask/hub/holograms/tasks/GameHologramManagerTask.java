@@ -57,9 +57,10 @@ public final class GameHologramManagerTask extends BukkitRunnable {
         }
 
         // remove players too far from hologram
-        var names = players.stream().map(Player::getName).toList();
-        for (String name : holograms.keySet()) {
-            if (names.contains(name)) continue;
+        var nearbyPlayers = players.stream().map(Player::getName).toList();
+        var hologramViewers = holograms.keySet().stream().toList(); // fix concurrency error hopefully
+        for (String name : hologramViewers) {
+            if (nearbyPlayers.contains(name)) continue;
 
             TextDisplay hologram = holograms.get(name);
             new GameHologramHideTask(hologram, 15, game.getPlugin()).runTask(game.getPlugin());
