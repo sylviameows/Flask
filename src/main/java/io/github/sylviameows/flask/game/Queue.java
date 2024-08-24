@@ -1,11 +1,10 @@
 package io.github.sylviameows.flask.game;
 
-import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.task.QueueTask;
 import io.github.sylviameows.flask.managers.PlayerManager;
 import io.github.sylviameows.flask.players.FlaskPlayer;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +30,15 @@ public class Queue<G extends Game> {
         totalPlayers++;
 
         Integer minimum = parent.getSettings().getMinPlayers();
+        Integer maximum = parent.getSettings().getMaxPlayers();
         if (queue.size() + 1 >= minimum && (task == null || task.isCancelled())) {
             queue.add(player);
 
-            task = new QueueTask(this, queue);
+            var players = queue.subList(0, Math.min(maximum, queue.size() + 1));
+            task = new QueueTask(this, players);
             task.runTaskTimer(parent.getPlugin(), 0L, 20L);
-            queue.clear();
-        } else if (task != null && !task.isCancelled()) {
+            queue.removeAll(players);
+        } else if (task != null && !task.isCancelled() && task.size() < maximum) {
             task.add(player);
         } else {
             queue.add(player);
@@ -51,6 +52,15 @@ public class Queue<G extends Game> {
             queue.remove(player);
             if (task != null) task.remove(player);
             totalPlayers--;
+        }
+    }
+
+    public void fill(@NotNull QueueTask task) {
+        Integer minimum = parent.getSettings().getMinPlayers();
+        Integer maximum = parent.getSettings().getMaxPlayers();
+
+        while (task.size() < maximum && !queue.isEmpty()) {
+            task.add(queue.removeFirst());
         }
     }
 

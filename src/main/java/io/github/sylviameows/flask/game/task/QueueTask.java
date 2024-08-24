@@ -2,7 +2,6 @@ package io.github.sylviameows.flask.game.task;
 
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.Queue;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -51,6 +50,9 @@ public class QueueTask extends BukkitRunnable {
             Flask.logger.info("Creating Lobby for "+players);
             parent.getParent().createLobby(new ArrayList<>(players));
             this.clear();
+
+            parent.fill(this); // attempts to fill queue after clearing, mainly used when maximum players is exceeded.
+            return;
         }
 
         count++;
