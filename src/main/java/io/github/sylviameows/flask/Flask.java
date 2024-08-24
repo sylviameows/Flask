@@ -1,20 +1,27 @@
 package io.github.sylviameows.flask;
 
+import com.mojang.brigadier.Command;
+import io.github.sylviameows.flask.commands.TestCommand;
 import io.github.sylviameows.flask.examples.ExampleGame;
 import io.github.sylviameows.flask.hub.holograms.GameHologram;
 import io.github.sylviameows.flask.listeners.JoinListener;
 import io.github.sylviameows.flask.listeners.LeaveListener;
 import io.github.sylviameows.flask.listeners.RightClickEntity;
 import io.github.sylviameows.flask.registries.GameRegistry;
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
+import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,8 +49,8 @@ public class Flask extends JavaPlugin {
         JoinListener.register(this);
         LeaveListener.register(this);
 
-        var location = new Location(Bukkit.getWorld("world"), 7.5, -59.0, -3.5);
-//        new GameHologram(games.get(this, "example"), location);
+        // commands
+        registerCommands();
 
         // display plugin loaded message (aka motd)
         for (Component component : motd()) {
@@ -56,6 +63,18 @@ public class Flask extends JavaPlugin {
         purgeFlaskEntities();
     }
 
+
+    public void registerCommands() {
+        var lifecycle = this.getLifecycleManager();
+        lifecycle.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+            final Commands commands = event.registrar();
+            new TestCommand().register(commands);
+        });
+    }
+
+    /**
+     * Removes any entities with the pdc tag "flask:purge," use to remove any potentially hanging text displays on shutdown.
+     */
     private void purgeFlaskEntities() {
         logger.info("Purging flask entities...");
         var worlds = Bukkit.getWorlds();
@@ -74,7 +93,7 @@ public class Flask extends JavaPlugin {
 
     /**
      * Gets the plugins message of the day ("motd"), using a random message.
-     * @return a list of each component in the motd.
+     * @return an array of each component in the motd.
      */
     private Component @NotNull [] motd() {
         List<String> messages = Arrays.asList(
