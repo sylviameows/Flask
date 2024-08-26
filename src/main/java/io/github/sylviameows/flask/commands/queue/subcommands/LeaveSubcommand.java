@@ -4,6 +4,7 @@ import com.mojang.brigadier.context.CommandContext;
 import io.github.sylviameows.flask.commands.structure.CommandProperties;
 import io.github.sylviameows.flask.commands.structure.FlaskCommand;
 import io.github.sylviameows.flask.managers.PlayerManager;
+import io.github.sylviameows.flask.services.MessageService;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.entity.Player;
 
@@ -15,13 +16,14 @@ public class LeaveSubcommand extends FlaskCommand {
             var flaskPlayer = PlayerManager.instance().get(player);
 
             if (!flaskPlayer.isInQueue()) {
-                player.sendRichMessage("<red>You are not in a queue!");
+                ms.sendMessage(player, MessageService.MessageType.ERROR, "no_queue");
                 return 1;
             }
 
+            ms.sendQueueMessage(player, "leave", flaskPlayer.getGame());
             flaskPlayer.getGame().getQueue().removePlayer(player);
         }
 
-        return 0;
+        return 1;
     }
 }

@@ -1,11 +1,13 @@
 package io.github.sylviameows.flask.commands.queue.subcommands;
 
 import com.mojang.brigadier.context.CommandContext;
+import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.commands.structure.CommandProperties;
 import io.github.sylviameows.flask.commands.structure.FlaskCommand;
 import io.github.sylviameows.flask.commands.structure.types.GameArgumentType;
 import io.github.sylviameows.flask.game.Game;
 import io.github.sylviameows.flask.managers.PlayerManager;
+import io.github.sylviameows.flask.services.MessageService;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
@@ -23,16 +25,19 @@ public class JoinSubcommand extends FlaskCommand {
 
     @Override
     public int execute(CommandContext<CommandSourceStack> context) {
-        context.getSource().getSender().sendRichMessage("<red>Missing game argument.");
+        var source = context.getSource().getSender();
+        ms.sendMessage(source, MessageService.MessageType.ERROR, "missing_arg", "game");
         return 1;
     }
 
     public int executeWithArgs(CommandContext<CommandSourceStack> context, Game game) {
         if (context.getSource().getSender() instanceof Player player) {
             if (!canJoin(player)) {
-                player.sendRichMessage("<red>You are already occupied!");
+                ms.sendMessage(player, MessageService.MessageType.ERROR, "occupied");
                 return 1;
             }
+
+            ms.sendQueueMessage(player, "join", game);
             game.getQueue().addPlayer(player);
         }
         return 1;

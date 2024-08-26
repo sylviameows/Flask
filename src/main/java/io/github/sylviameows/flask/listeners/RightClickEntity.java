@@ -4,6 +4,7 @@ import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.Game;
 import io.github.sylviameows.flask.managers.PlayerManager;
 import io.github.sylviameows.flask.registries.GameRegistry;
+import io.github.sylviameows.flask.services.MessageService;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -32,9 +33,11 @@ public class RightClickEntity implements Listener {
                     "hologram_interaction")
             ) return;
 
+            var ms = Flask.getMessageService();
+
             Player player = event.getPlayer();
             if (PlayerManager.instance().get(player).isOccupied()) {
-                player.sendMessage("You are already occupied!");
+                ms.sendMessage(player, MessageService.MessageType.ERROR, "occupied");
                 return;
             }
 
@@ -42,18 +45,13 @@ public class RightClickEntity implements Listener {
             if (gameKeyString == null) return;
             Game game = GameRegistry.instance().get(NamespacedKey.fromString(gameKeyString));
             if (game == null) {
-                player.sendMessage("Could not find the game \""+gameKeyString+"\", if you believe this is an error contact your server's administrator."); // TODO: service?
+                ms.sendMessage(player, MessageService.MessageType.ERROR, "game_doesnt_exist", gameKeyString);
                 return;
             }
 
             // add player to queue
             game.getQueue().addPlayer(player);
-            player.sendMessage(
-                    Component.text("Joining ").append(
-                            Component.text(game.getSettings().getName())
-                                    .color(game.getSettings().getColor())
-                    )
-            );
+            ms.sendQueueMessage(player, "join", game);
         }
     }
 }

@@ -9,6 +9,7 @@ import io.github.sylviameows.flask.listeners.JoinListener;
 import io.github.sylviameows.flask.listeners.LeaveListener;
 import io.github.sylviameows.flask.listeners.RightClickEntity;
 import io.github.sylviameows.flask.registries.GameRegistry;
+import io.github.sylviameows.flask.services.MessageService;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
@@ -35,6 +36,7 @@ import java.util.Random;
  */
 public class Flask extends JavaPlugin {
     public static ComponentLogger logger;
+    private static MessageService messageService;
 
     @Override
     public void onEnable() {
@@ -49,6 +51,8 @@ public class Flask extends JavaPlugin {
         RightClickEntity.register(this);
         JoinListener.register(this);
         LeaveListener.register(this);
+
+        Flask.messageService = new MessageService(this);
 
         // commands
         registerCommands();
@@ -71,6 +75,10 @@ public class Flask extends JavaPlugin {
             final Commands commands = event.registrar();
             new QueueCommand().register(commands);
         });
+    }
+
+    public static MessageService getMessageService() {
+        return messageService;
     }
 
     /**

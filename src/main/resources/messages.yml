@@ -1,0 +1,18 @@
+format: "minimessage" # options are: minimessage & legacy
+colors:
+  mint: "#87ffdf" # flask's color
+prefix:
+  enabled: true
+  default: "<color:$mint>🧪 › "
+  error: "<red>🧪 › "
+
+errors:
+  no_permission: "<red>You do not have permission to use that command. <gray>(%s)"
+  occupied: "<red>You are currently occupied!"
+  missing_arg: "<red>Missing the %s argument."
+  no_queue: "<red>You are not in a queue!"
+  game_doesnt_exist: "Could not find the game \"%s\", are you sure it exists?"
+messages:
+  queue:
+    join: "<white>You are now in queue for <color:$mint>%s</color>!"
+    leave: "<white>You are no longer in queue for <color:$mint>%s</color>!"
