@@ -1,4 +1,4 @@
-package io.github.sylviameows.flask.commands;
+package io.github.sylviameows.flask.commands.structure;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -15,17 +15,20 @@ public abstract class FlaskCommand {
     String[] aliases;
     String permission;
 
-    List<FlaskCommand> subCommands = new ArrayList<>();
-    List<ArgumentBuilder<CommandSourceStack, ?>> arguments = new ArrayList<>();
+    protected List<FlaskCommand> subCommands = new ArrayList<>();
+    protected List<ArgumentBuilder<CommandSourceStack, ?>> arguments = new ArrayList<>();
 
     protected FlaskCommand() {
-        var annotation = this.getClass().getAnnotation(FlaskCommandSettings.class);
+        var annotation = this.getClass().getAnnotation(CommandProperties.class);
 
         label = annotation.label();
         aliases = annotation.aliases();
         permission = annotation.permission();
     }
 
+    /**
+     * This executes when the command is run with no parameters.
+     */
     abstract public int execute(CommandContext<CommandSourceStack> context);
 
     public void addSubCommand(FlaskCommand command) {
@@ -46,16 +49,15 @@ public abstract class FlaskCommand {
             command.requires(source -> source.getSender().hasPermission(permission));
         }
 
+        command.executes(this::execute);
+
         // add arguments
         if (!arguments.isEmpty()) {
             var chain = arguments.removeFirst();
             for (var argument : arguments) {
                 chain = chain.then(argument);
-            }
-            chain = chain.executes(this::execute);
+            };
             command = command.then(chain);
-        } else {
-            command.executes(this::execute);
         }
 
         for (var subcommand : subCommands) {
