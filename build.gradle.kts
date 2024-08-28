@@ -4,8 +4,8 @@ plugins {
     id("xyz.jpenilla.run-paper") version "2.3.0" // run paper server plugin
 }
 
-description = "minigame wrapper"
-version = "0.3-ALPHA"
+description = "minigame wrapper plugin for 1.21.1"
+version = "0.4-ALPHA"
 
 group = "io.github.sylviameows"
 
@@ -17,13 +17,13 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.infernalsuite.aswm:api:1.20.6-R0.1-SNAPSHOT") // slime worlds api
-    paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT") // paper dependency
+    compileOnly("com.infernalsuite.aswm:api:3.0.0-SNAPSHOT") // slime worlds api
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT") // paper dependency
 
     // fawe requirement for region manipulation
-    implementation(platform("com.intellectualsites.bom:bom-newest:1.45")) // Ref: https://github.com/IntellectualSites/bom
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core")
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit")
+//    implementation(platform("com.intellectualsites.bom:bom-newest:1.45")) // Ref: https://github.com/IntellectualSites/bom
+//    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core")
+//    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit")
 }
 
 // defines usage of mojang mappings
