@@ -10,3 +10,18 @@ main: io.github.sylviameows.flask.Flask
 api-version: $apiVersion
 prefix: "Flask"
 load: POSTWORLD
+
+# plugin permissions
+permissions:
+  flask.queue:
+    description: "This allows players to join and leave queues."
+    default: not op
+    children:
+      - flask.queue.join
+      - flask.queue.leave
+  flask.queue.join:
+    description: "This allows players to join a queue."
+    default: not op
+  flask.queue.leave:
+    description: "This allows players to leave a queue."
+    default: not op

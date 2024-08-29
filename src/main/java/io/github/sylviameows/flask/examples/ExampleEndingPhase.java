@@ -1,5 +1,6 @@
 package io.github.sylviameows.flask.examples;
 
+import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.Palette;
 import io.github.sylviameows.flask.game.Lobby;
 import io.github.sylviameows.flask.game.Phase;
@@ -76,10 +77,14 @@ public class ExampleEndingPhase implements Phase {
         parent.players.forEach(player -> {
             player.setGameMode(GameMode.ADVENTURE);
 
-            var lobby = Bukkit.getWorld("world"); // todo: config default world and location
+            var lobby = Bukkit.getWorld("world");
             player.teleport(new Location(lobby, 0.0, -60.0, 0.0));
-            // todo: close lobby.
         });
+
+        var world = parent.getWorld();
+        if (world != null) {
+            Bukkit.unloadWorld(world.getName(), false);
+        }
     }
 
     @EventHandler

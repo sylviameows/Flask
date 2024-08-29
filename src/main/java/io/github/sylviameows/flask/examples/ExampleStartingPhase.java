@@ -39,6 +39,7 @@ public class ExampleStartingPhase implements Phase {
             }
 
             var world = Bukkit.getWorld(slimeWorld.getName());
+            parent.setWorld(world);
             var center = new Location(world, 0.0, 64.0, 0.0);
 
             var a = center.clone().add(0.0, 0.0, 15.0).setDirection(new Vector(0,0,-1));

@@ -3,6 +3,7 @@ package io.github.sylviameows.flask.game;
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.managers.PlayerManager;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +17,8 @@ public class Lobby<G extends Game> {
 
     public List<Player> players;
     private @NotNull Phase phase;
+
+    private World world;
 
     public Lobby(G parent) {
         this.parent = parent;
@@ -84,5 +87,13 @@ public class Lobby<G extends Game> {
 
     public G getParent() {
         return parent;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
     }
 }
