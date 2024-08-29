@@ -10,6 +10,8 @@ import io.github.sylviameows.flask.listeners.LeaveListener;
 import io.github.sylviameows.flask.listeners.RightClickEntity;
 import io.github.sylviameows.flask.registries.GameRegistry;
 import io.github.sylviameows.flask.services.MessageService;
+import io.github.sylviameows.flask.services.world.FileWorldService;
+import io.github.sylviameows.flask.services.world.WorldService;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
@@ -37,6 +39,7 @@ import java.util.Random;
 public class Flask extends JavaPlugin {
     public static ComponentLogger logger;
     private static MessageService messageService;
+    private static WorldService worldService;
     private static Flask instance;
 
     @Override
@@ -55,6 +58,7 @@ public class Flask extends JavaPlugin {
         LeaveListener.register(this);
 
         Flask.messageService = new MessageService(this);
+        Flask.worldService = new FileWorldService();
 
         // commands
         registerCommands();
@@ -82,7 +86,10 @@ public class Flask extends JavaPlugin {
     public static MessageService getMessageService() {
         return messageService;
     }
-    public static Flask getInstance() {
+    public static WorldService getWorldService() {
+        return worldService;
+    }
+    public static Flask getInstance() { // todo(): try to remove usages
         return instance;
     }
 

@@ -10,6 +10,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -74,7 +75,9 @@ public class ExampleEndingPhase implements Phase {
     public void onDisabled() {
         parent.players.forEach(player -> {
             player.setGameMode(GameMode.ADVENTURE);
-            // todo: teleport to lobby?
+
+            var lobby = Bukkit.getWorld("world"); // todo: config default world and location
+            player.teleport(new Location(lobby, 0.0, -60.0, 0.0));
             // todo: close lobby.
         });
     }

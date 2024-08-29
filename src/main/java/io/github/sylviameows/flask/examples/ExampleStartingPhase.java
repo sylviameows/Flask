@@ -1,14 +1,18 @@
 package io.github.sylviameows.flask.examples;
 
+import com.infernalsuite.aswm.api.world.SlimeWorld;
+import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.Lobby;
 import io.github.sylviameows.flask.game.Phase;
-import org.bukkit.Color;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import io.github.sylviameows.flask.services.MessageService;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.util.Vector;
+
+import java.util.concurrent.ExecutionException;
 
 public class ExampleStartingPhase implements Phase {
     private Player playerA;
@@ -22,7 +26,29 @@ public class ExampleStartingPhase implements Phase {
         setupPlayer(playerA, Color.RED);
         setupPlayer(playerB, Color.AQUA);
 
-        parent.nextPhase();
+        var promise = Flask.getWorldService().findAndUseTemplate("example");
+        Bukkit.getScheduler().runTaskAsynchronously(parent.getParent().getPlugin(), task -> {
+            SlimeWorld slimeWorld;
+            try {
+                slimeWorld = promise.get();
+            } catch (InterruptedException | ExecutionException e) {
+                parent.closeLobby(player -> {
+                    Flask.getMessageService().sendMessage(player, MessageService.MessageType.ERROR, "template_doesnt_exist");
+                });
+                return;
+            }
+
+            var world = Bukkit.getWorld(slimeWorld.getName());
+            var center = new Location(world, 0.0, 64.0, 0.0);
+
+            var a = center.clone().add(0.0, 0.0, 15.0).setDirection(new Vector(0,0,-1));
+            var b = center.clone().add(0.0, 0.0, -15.0).setDirection(new Vector(0,0,1));
+
+            playerA.teleportAsync(a);
+            playerB.teleportAsync(b);
+
+            parent.nextPhase();
+        });
     }
 
     private void setupPlayer(Player player, Color color) {

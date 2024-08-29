@@ -11,7 +11,8 @@ errors:
   occupied: "<red>You are currently occupied!"
   missing_arg: "<red>Missing the %s argument."
   no_queue: "<red>You are not in a queue!"
-  game_doesnt_exist: "Could not find the game \"%s\", are you sure it exists?"
+  game_doesnt_exist: "<red>Could not find the game \"%s\", are you sure it exists?"
+  template_doesnt_exist: "<red>Template \"%s\" couldn't be found, are you sure it exists?"
 messages:
   queue:
     join: "<white>You are now in queue for <color:$mint>%s</color>!"
