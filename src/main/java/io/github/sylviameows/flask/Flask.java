@@ -37,9 +37,11 @@ import java.util.Random;
 public class Flask extends JavaPlugin {
     public static ComponentLogger logger;
     private static MessageService messageService;
+    private static Flask instance;
 
     @Override
     public void onEnable() {
+        instance = this;
         logger = getComponentLogger();
 
         var games = GameRegistry.instance();
@@ -79,6 +81,9 @@ public class Flask extends JavaPlugin {
 
     public static MessageService getMessageService() {
         return messageService;
+    }
+    public static Flask getInstance() {
+        return instance;
     }
 
     /**
