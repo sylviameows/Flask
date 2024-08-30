@@ -1,6 +1,6 @@
-package io.github.sylviameows.flask.game;
+package io.github.sylviameows.flask.api.game;
 
-import io.github.sylviameows.flask.Palette;
+import io.github.sylviameows.flask.api.Palette;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 

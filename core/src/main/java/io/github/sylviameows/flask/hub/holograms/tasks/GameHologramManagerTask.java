@@ -1,8 +1,8 @@
 package io.github.sylviameows.flask.hub.holograms.tasks;
 
 import io.github.sylviameows.flask.Palette;
-import io.github.sylviameows.flask.game.Game;
-import io.github.sylviameows.flask.game.Settings;
+import io.github.sylviameows.flask.api.game.Game;
+import io.github.sylviameows.flask.api.game.Settings;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Color;

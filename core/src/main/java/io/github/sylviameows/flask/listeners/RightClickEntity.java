@@ -2,10 +2,9 @@ package io.github.sylviameows.flask.listeners;
 
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.Game;
-import io.github.sylviameows.flask.managers.PlayerManager;
-import io.github.sylviameows.flask.registries.GameRegistry;
+import io.github.sylviameows.flask.managers.PlayerManagerImpl;
+import io.github.sylviameows.flask.registries.GameRegistryImpl;
 import io.github.sylviameows.flask.services.MessageService;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -36,14 +35,14 @@ public class RightClickEntity implements Listener {
             var ms = Flask.getMessageService();
 
             Player player = event.getPlayer();
-            if (PlayerManager.instance().get(player).isOccupied()) {
+            if (PlayerManagerImpl.instance().get(player).isOccupied()) {
                 ms.sendMessage(player, MessageService.MessageType.ERROR, "occupied");
                 return;
             }
 
             String gameKeyString = pdc.get(new NamespacedKey("flask", "game"), PersistentDataType.STRING);
             if (gameKeyString == null) return;
-            Game game = GameRegistry.instance().get(NamespacedKey.fromString(gameKeyString));
+            Game game = GameRegistryImpl.instance().get(NamespacedKey.fromString(gameKeyString));
             if (game == null) {
                 ms.sendMessage(player, MessageService.MessageType.ERROR, "game_doesnt_exist", gameKeyString);
                 return;

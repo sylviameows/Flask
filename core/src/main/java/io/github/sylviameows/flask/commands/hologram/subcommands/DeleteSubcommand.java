@@ -1,7 +1,6 @@
 package io.github.sylviameows.flask.commands.hologram.subcommands;
 
 import com.mojang.brigadier.context.CommandContext;
-import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.commands.structure.CommandProperties;
 import io.github.sylviameows.flask.commands.structure.FlaskCommand;
 import io.github.sylviameows.flask.managers.HologramManager;

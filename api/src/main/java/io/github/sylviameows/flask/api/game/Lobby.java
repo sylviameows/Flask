@@ -1,7 +1,5 @@
-package io.github.sylviameows.flask.game;
+package io.github.sylviameows.flask.api.game;
 
-import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.managers.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -40,12 +38,14 @@ public class Lobby<G extends Game> {
 
     // todo: call function in phase
     public void addPlayer(Player player) {
-        PlayerManager.instance().get(player).setLobby(this);
+        var api = parent.getPlugin().getFlaskAPI();
+        api.getPlayerManager().get(player).setLobby(this);
         players.add(player);
     }
 
     public void removePlayer(Player player) {
-        PlayerManager.instance().get(player).setLobby(null);
+        var api = parent.getPlugin().getFlaskAPI();
+        api.getPlayerManager().get(player).setLobby(null);
         players.remove(player);
     }
 
@@ -79,7 +79,7 @@ public class Lobby<G extends Game> {
     public void nextPhase() {
         Phase nextPhase = phase.next();
         if (nextPhase == null) {
-            Flask.logger.error("Next phase is not defined, aborting next phase action...");
+            parent.getPlugin().getComponentLogger().error("Next phase is not defined, aborting next phase action...");
             return;
         }
         updatePhase(nextPhase);

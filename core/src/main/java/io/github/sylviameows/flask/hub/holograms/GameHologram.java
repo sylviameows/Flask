@@ -1,11 +1,11 @@
 package io.github.sylviameows.flask.hub.holograms;
 
 import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.game.Game;
-import io.github.sylviameows.flask.game.Settings;
+import io.github.sylviameows.flask.api.game.Game;
+import io.github.sylviameows.flask.api.game.Settings;
 import io.github.sylviameows.flask.hub.holograms.tasks.GameHologramManagerTask;
 import io.github.sylviameows.flask.managers.HologramManager;
-import io.github.sylviameows.flask.registries.GameRegistry;
+import io.github.sylviameows.flask.registries.GameRegistryImpl;
 import org.apache.commons.lang.NullArgumentException;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -85,7 +85,7 @@ public class GameHologram {
 
             var gameKey = interaction.getPersistentDataContainer().get(new NamespacedKey("flask", "game"), PersistentDataType.STRING);
             if (gameKey == null) throw new NullArgumentException("Game value on interaction entity is null!");
-            this.game = GameRegistry.instance().get(NamespacedKey.fromString(gameKey));
+            this.game = GameRegistryImpl.instance().get(NamespacedKey.fromString(gameKey));
             this.location = display.getLocation();
 
             this.uuid = interaction.getUniqueId();

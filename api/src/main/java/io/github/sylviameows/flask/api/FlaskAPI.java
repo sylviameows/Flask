@@ -1,7 +1,9 @@
 package io.github.sylviameows.flask.api;
 
-public class FlaskAPI {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
-    }
+import io.github.sylviameows.flask.api.manager.PlayerManager;
+import io.github.sylviameows.flask.api.registry.GameRegistry;
+
+public interface FlaskAPI {
+    GameRegistry getGameRegistry();
+    PlayerManager getPlayerManager();
 }

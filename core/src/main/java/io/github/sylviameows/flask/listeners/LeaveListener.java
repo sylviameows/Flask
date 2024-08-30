@@ -1,7 +1,7 @@
 package io.github.sylviameows.flask.listeners;
 
 import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.managers.PlayerManager;
+import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +25,7 @@ public class LeaveListener implements Listener {
     }
 
     private void handleDisconnect(Player player) {
-        var flask = PlayerManager.instance().get(player);
+        var flask = PlayerManagerImpl.instance().get(player);
         var game = flask.getGame();
         if (game != null) {
             game.getQueue().removePlayer(player);

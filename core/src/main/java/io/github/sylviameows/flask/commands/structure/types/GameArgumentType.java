@@ -4,16 +4,13 @@ import com.mojang.brigadier.LiteralMessage;
 import com.mojang.brigadier.Message;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandExceptionType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.game.Game;
-import io.github.sylviameows.flask.registries.GameRegistry;
+import io.github.sylviameows.flask.api.game.Game;
+import io.github.sylviameows.flask.registries.GameRegistryImpl;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import org.bukkit.NamespacedKey;
@@ -26,7 +23,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class GameArgumentType implements CustomArgumentType<Game, NamespacedKey> {
-    private final GameRegistry registry = GameRegistry.instance();
+    private final GameRegistryImpl registry = GameRegistryImpl.instance();
 
     public static GameArgumentType game() {
         return new GameArgumentType();

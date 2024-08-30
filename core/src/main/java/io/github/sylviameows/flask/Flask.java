@@ -1,8 +1,9 @@
 package io.github.sylviameows.flask;
 
-import com.mojang.brigadier.Command;
 import io.github.sylviameows.flask.api.FlaskAPI;
-import io.github.sylviameows.flask.commands.TestCommand;
+import io.github.sylviameows.flask.api.FlaskPlugin;
+import io.github.sylviameows.flask.api.manager.PlayerManager;
+import io.github.sylviameows.flask.api.registry.GameRegistry;
 import io.github.sylviameows.flask.commands.hologram.HologramCommand;
 import io.github.sylviameows.flask.commands.queue.QueueCommand;
 import io.github.sylviameows.flask.examples.ExampleGame;
@@ -10,25 +11,21 @@ import io.github.sylviameows.flask.hub.holograms.GameHologram;
 import io.github.sylviameows.flask.listeners.JoinListener;
 import io.github.sylviameows.flask.listeners.LeaveListener;
 import io.github.sylviameows.flask.listeners.RightClickEntity;
-import io.github.sylviameows.flask.registries.GameRegistry;
+import io.github.sylviameows.flask.managers.PlayerManagerImpl;
+import io.github.sylviameows.flask.registries.GameRegistryImpl;
 import io.github.sylviameows.flask.services.MessageService;
 import io.github.sylviameows.flask.services.world.FileWorldService;
 import io.github.sylviameows.flask.services.world.WorldService;
 import io.papermc.paper.command.brigadier.Commands;
-import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
-import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -38,7 +35,7 @@ import java.util.Random;
 /**
  * The main plugin file, where access to all necessary information is given.
  */
-public class Flask extends JavaPlugin {
+public class Flask extends FlaskPlugin implements FlaskAPI {
     public static ComponentLogger logger;
     private static MessageService messageService;
     private static WorldService worldService;
@@ -49,7 +46,7 @@ public class Flask extends JavaPlugin {
         instance = this;
         logger = getComponentLogger();
 
-        var games = GameRegistry.instance();
+        var games = GameRegistryImpl.instance();
         new ExampleGame(this).register("example");
         logger.info("Registered game: "+games.get(this, "example").getSettings().getName());
 
@@ -137,5 +134,20 @@ public class Flask extends JavaPlugin {
                 Component.text(" /o  \\   ").color(Palette.MINT).append(Component.text(message).color(Palette.WHITE)),
                 Component.text("/___o_\\").style(Style.style(Palette.MINT, TextDecoration.UNDERLINED))
         };
+    }
+
+    @Override
+    public GameRegistry getGameRegistry() {
+        return GameRegistryImpl.instance();
+    }
+
+    @Override
+    public PlayerManager getPlayerManager() {
+        return PlayerManagerImpl.instance();
+    }
+
+    @Override
+    public FlaskAPI getFlaskAPI() {
+        return this;
     }
 }

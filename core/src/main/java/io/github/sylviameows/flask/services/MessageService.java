@@ -1,7 +1,7 @@
 package io.github.sylviameows.flask.services;
 
 import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.game.Game;
+import io.github.sylviameows.flask.api.game.Game;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.ComponentSerializer;

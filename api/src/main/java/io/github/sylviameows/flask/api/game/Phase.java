@@ -1,4 +1,4 @@
-package io.github.sylviameows.flask.game;
+package io.github.sylviameows.flask.api.game;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;

@@ -1,12 +1,14 @@
 package io.github.sylviameows.flask.managers;
 
+import io.github.sylviameows.flask.api.manager.Manager;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-abstract class Manager<T> {
+abstract class ManagerImpl<T> implements Manager<T> {
     protected final Map<String, T> map;
 
-    protected Manager() {
+    protected ManagerImpl() {
         this.map = new ConcurrentHashMap<>();
     }
 

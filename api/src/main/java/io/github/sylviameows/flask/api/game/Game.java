@@ -1,6 +1,7 @@
-package io.github.sylviameows.flask.game;
+package io.github.sylviameows.flask.api.game;
 
-import io.github.sylviameows.flask.registries.GameRegistry;
+import io.github.sylviameows.flask.api.FlaskPlugin;
+import io.github.sylviameows.flask.api.registry.GameRegistry;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -8,7 +9,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.List;
 
 public abstract class Game {
-    private final Plugin plugin;
+    private final FlaskPlugin plugin;
     private Settings settings;
     private final Queue<?> queue;
 
@@ -16,7 +17,7 @@ public abstract class Game {
 
     private Integer totalPlayers;
 
-    protected Game(Plugin plugin, Settings settings) {
+    protected Game(FlaskPlugin plugin, Settings settings) {
         this.plugin = plugin;
         this.settings = settings;
 
@@ -26,7 +27,7 @@ public abstract class Game {
     public boolean register(String key) {
         if (this.key != null) return false;
         this.key = new NamespacedKey(plugin, key);
-        GameRegistry.instance().add(this);
+        plugin.getFlaskAPI().getGameRegistry().add(this);
         return true;
     }
 
@@ -42,7 +43,7 @@ public abstract class Game {
     public NamespacedKey getKey() {
         return key;
     }
-    public Plugin getPlugin() {
+    public FlaskPlugin getPlugin() {
         return plugin;
     }
 }

@@ -1,7 +1,7 @@
 package io.github.sylviameows.flask.listeners;
 
 import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.managers.PlayerManager;
+import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +14,6 @@ public class JoinListener implements Listener {
 
     @EventHandler
     private void join(PlayerJoinEvent event) {
-        PlayerManager.instance().add(event.getPlayer());
+        PlayerManagerImpl.instance().add(event.getPlayer());
     }
 }

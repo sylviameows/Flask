@@ -4,7 +4,7 @@ import com.mojang.brigadier.context.CommandContext;
 import io.github.sylviameows.flask.commands.structure.CommandProperties;
 import io.github.sylviameows.flask.commands.structure.FlaskCommand;
 import io.github.sylviameows.flask.commands.structure.types.GameArgumentType;
-import io.github.sylviameows.flask.game.Game;
+import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.hub.holograms.GameHologram;
 import io.github.sylviameows.flask.services.MessageService;
 import io.papermc.paper.command.brigadier.CommandSourceStack;

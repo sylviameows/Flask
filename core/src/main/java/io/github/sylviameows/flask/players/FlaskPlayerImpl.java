@@ -1,17 +1,18 @@
 package io.github.sylviameows.flask.players;
 
-import io.github.sylviameows.flask.game.Game;
-import io.github.sylviameows.flask.game.Lobby;
-import io.github.sylviameows.flask.managers.PlayerManager;
+import io.github.sylviameows.flask.api.FlaskPlayer;
+import io.github.sylviameows.flask.api.game.Game;
+import io.github.sylviameows.flask.api.game.Lobby;
+import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import org.bukkit.entity.Player;
 
-public class FlaskPlayer {
+public class FlaskPlayerImpl implements FlaskPlayer {
     private Game game = null;
     private Lobby<?> lobby = null;
 
-    public FlaskPlayer(Player player) {
-        if (!PlayerManager.instance().has(player)) {
-            PlayerManager.instance().add(player.getUniqueId().toString(), this);
+    public FlaskPlayerImpl(Player player) {
+        if (!PlayerManagerImpl.instance().has(player)) {
+            PlayerManagerImpl.instance().add(player.getUniqueId().toString(), this);
         }
     }
 

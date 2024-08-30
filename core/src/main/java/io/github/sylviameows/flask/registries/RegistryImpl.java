@@ -1,15 +1,16 @@
 package io.github.sylviameows.flask.registries;
 
+import io.github.sylviameows.flask.api.registry.Registry;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-abstract class Registry<T> {
+abstract class RegistryImpl<T> implements Registry<T> {
     protected final Map<NamespacedKey, T> map;
 
-    protected Registry() {
+    protected RegistryImpl() {
         this.map = new ConcurrentHashMap<>();
     }
 

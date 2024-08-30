@@ -2,8 +2,8 @@ package io.github.sylviameows.flask.examples;
 
 import com.infernalsuite.aswm.api.world.SlimeWorld;
 import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.game.Lobby;
-import io.github.sylviameows.flask.game.Phase;
+import io.github.sylviameows.flask.api.game.Lobby;
+import io.github.sylviameows.flask.api.game.Phase;
 import io.github.sylviameows.flask.services.MessageService;
 import org.bukkit.*;
 import org.bukkit.entity.Player;

@@ -1,7 +1,7 @@
 package io.github.sylviameows.flask.examples;
 
-import io.github.sylviameows.flask.game.Lobby;
-import io.github.sylviameows.flask.game.Phase;
+import io.github.sylviameows.flask.api.game.Lobby;
+import io.github.sylviameows.flask.api.game.Phase;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

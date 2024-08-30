@@ -1,12 +1,11 @@
 package io.github.sylviameows.flask.commands.queue.subcommands;
 
 import com.mojang.brigadier.context.CommandContext;
-import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.commands.structure.CommandProperties;
 import io.github.sylviameows.flask.commands.structure.FlaskCommand;
 import io.github.sylviameows.flask.commands.structure.types.GameArgumentType;
-import io.github.sylviameows.flask.game.Game;
-import io.github.sylviameows.flask.managers.PlayerManager;
+import io.github.sylviameows.flask.api.game.Game;
+import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import io.github.sylviameows.flask.services.MessageService;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
@@ -44,6 +43,6 @@ public class JoinSubcommand extends FlaskCommand {
     }
 
     public boolean canJoin(Player player) {
-        return !PlayerManager.instance().get(player).isOccupied();
+        return !PlayerManagerImpl.instance().get(player).isOccupied();
     }
 }

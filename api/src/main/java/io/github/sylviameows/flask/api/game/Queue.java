@@ -1,8 +1,7 @@
-package io.github.sylviameows.flask.game;
+package io.github.sylviameows.flask.api.game;
 
-import io.github.sylviameows.flask.game.task.QueueTask;
-import io.github.sylviameows.flask.managers.PlayerManager;
-import io.github.sylviameows.flask.players.FlaskPlayer;
+import io.github.sylviameows.flask.api.manager.PlayerManager;
+import io.github.sylviameows.flask.api.FlaskPlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,12 +21,13 @@ public class Queue<G extends Game> {
 
     private QueueTask task;
 
-    private final PlayerManager pm = PlayerManager.instance();
+    private final PlayerManager pm;
 
     public Queue(G game) {
         this.parent = game;
         this.totalPlayers = 0;
         this.queue = new ArrayList<>();
+        this.pm = parent.getPlugin().getFlaskAPI().getPlayerManager();
     }
 
     /**
