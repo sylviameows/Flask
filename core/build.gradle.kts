@@ -19,13 +19,9 @@ repositories {
 dependencies {
     compileOnly("com.infernalsuite.aswm:api:3.0.0-SNAPSHOT") // slime worlds api
     implementation("com.infernalsuite.aswm:loaders:3.0.0-SNAPSHOT") // slime world loaders
+    implementation(project(":api"))
 
     paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT") // paper dependency
-
-    // fawe requirement for region manipulation
-//    implementation(platform("com.intellectualsites.bom:bom-newest:1.45")) // Ref: https://github.com/IntellectualSites/bom
-//    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core")
-//    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit")
 }
 
 // defines usage of mojang mappings
@@ -33,12 +29,12 @@ paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArt
 
 tasks {
     assemble {
-        dependsOn(reobfJar) // can be removed when updating to post 1.20.4
+        dependsOn(reobfJar)
     }
 
     compileJava {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(21) // push to 21 when updating past 1.20.4
+        options.release.set(21)
     }
 
     processResources {
@@ -59,10 +55,6 @@ tasks {
         manifest {
             attributes["paperweight-mappings-namespace"] = "mojang"
         }
-    }
-
-    runServer {
-        minecraftVersion("1.20.4")
     }
 }
 

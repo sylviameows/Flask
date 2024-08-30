@@ -1,6 +1,7 @@
 package io.github.sylviameows.flask;
 
 import com.mojang.brigadier.Command;
+import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.commands.TestCommand;
 import io.github.sylviameows.flask.commands.hologram.HologramCommand;
 import io.github.sylviameows.flask.commands.queue.QueueCommand;
