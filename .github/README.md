@@ -5,8 +5,9 @@
 /___o_\
 ```
 ---
-**NOTICE:** This plugin/library is currently under development, and is not ready to be used. 
-When this project is in a more ready state, this notice will be removed and proper documentation will be created.
+> [!IMPORTANT]
+> This project is currently **under development**, and much of the code is subject to being changed or refactoring without warning. <br>
+> This notice will be removed when this project is no longer in such an unstable state.
 
 ## What is this?
 Flask is an open-source library plugin meant to ease the development process of minigames for Paper servers. Currently, it only supports usage on a single server, and not a network.
@@ -26,4 +27,4 @@ These are features that I would like to implement at some point, but have no set
 Nothing yet.
 
 ## Contributing
-Feel free to help, open a pull request or issue!
+Feel free to help by opening a [pull request](https://github.com/sylviameows/Flask/pulls) or [issue](https://github.com/sylviameows/Flask/issues)!
