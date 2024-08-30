@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("io.papermc.paperweight.userdev") version "1.7.1" // paperweight userdev
-    id("xyz.jpenilla.run-paper") version "2.3.0" // run paper server plugin
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 description = "minigame wrapper plugin for 1.21.1"
@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     compileOnly("com.infernalsuite.aswm:api:3.0.0-SNAPSHOT") // slime worlds api
-    implementation("com.infernalsuite.aswm:loaders:3.0.0-SNAPSHOT") // slime world loaders
+    compileOnly("com.infernalsuite.aswm:loaders:3.0.0-SNAPSHOT") // slime world loaders
     implementation(project(":api"))
 
     paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT") // paper dependency

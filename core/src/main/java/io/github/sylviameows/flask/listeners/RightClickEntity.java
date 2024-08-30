@@ -1,7 +1,7 @@
 package io.github.sylviameows.flask.listeners;
 
 import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.game.Game;
+import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import io.github.sylviameows.flask.registries.GameRegistryImpl;
 import io.github.sylviameows.flask.services.MessageService;
