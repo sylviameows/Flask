@@ -8,3 +8,4 @@ pluginManagement {
 rootProject.name = "Flask"
 include("core")
 include("api")
+include("example")

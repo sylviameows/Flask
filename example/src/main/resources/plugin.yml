@@ -1,0 +1,6 @@
+name: duels
+version: '1.0-SNAPSHOT'
+main: io.github.sylviameows.duels.Duels
+api-version: '1.21'
+depend:
+  - core

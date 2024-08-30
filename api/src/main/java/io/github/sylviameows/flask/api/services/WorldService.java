@@ -1,4 +1,4 @@
-package io.github.sylviameows.flask.services.world;
+package io.github.sylviameows.flask.api.services;
 
 import com.infernalsuite.aswm.api.AdvancedSlimePaperAPI;
 import com.infernalsuite.aswm.api.exceptions.CorruptedWorldException;
@@ -6,8 +6,8 @@ import com.infernalsuite.aswm.api.exceptions.NewerFormatException;
 import com.infernalsuite.aswm.api.exceptions.UnknownWorldException;
 import com.infernalsuite.aswm.api.world.SlimeWorld;
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap;
-import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.utils.SchedulerUtil;
+import io.github.sylviameows.flask.api.FlaskAPI;
+import io.github.sylviameows.flask.api.util.SchedulerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.event.world.WorldLoadEvent;
 
@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public interface WorldService {
     AdvancedSlimePaperAPI slime = AdvancedSlimePaperAPI.instance();
-    Flask flask = Flask.getInstance();
+    FlaskAPI flask = FlaskAPI.instance();
 
     /**
      * Generates a temporary world that is an exact copy of the given "template" world. This world will not be saved.
@@ -29,11 +29,11 @@ public interface WorldService {
      */
     default SlimeWorld useTemplate(SlimeWorld template, String name) {
         if (!template.isReadOnly()) {
-            Flask.logger.warn("Loading template ("+template.getName()+") that is not read-only, it is recommended to only use read-only slime worlds.");
+            flask.getPlugin().getComponentLogger().warn("Loading template ("+template.getName()+") that is not read-only, it is recommended to only use read-only slime worlds.");
         }
 
         AtomicReference<SlimeWorld> world = new AtomicReference<>();
-        SchedulerUtil.runSyncAndWait(flask, () -> {
+        SchedulerUtil.runSyncAndWait(flask.getPlugin(), () -> {
             var clone = template.clone(name);
             world.set(loadWorld(clone));
         });
@@ -107,7 +107,7 @@ public interface WorldService {
         var scheduler = Bukkit.getScheduler();
 
         // read the world.
-        scheduler.runTaskAsynchronously(flask, task -> {
+        scheduler.runTaskAsynchronously(flask.getPlugin(), task -> {
             try {
                 var world = readWorld(name, readOnly, properties);
                 promise.complete(world);

@@ -4,9 +4,9 @@ import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.api.FlaskPlugin;
 import io.github.sylviameows.flask.api.manager.PlayerManager;
 import io.github.sylviameows.flask.api.registry.GameRegistry;
+import io.github.sylviameows.flask.api.services.WorldService;
 import io.github.sylviameows.flask.commands.hologram.HologramCommand;
 import io.github.sylviameows.flask.commands.queue.QueueCommand;
-import io.github.sylviameows.flask.examples.ExampleGame;
 import io.github.sylviameows.flask.hub.holograms.GameHologram;
 import io.github.sylviameows.flask.listeners.JoinListener;
 import io.github.sylviameows.flask.listeners.LeaveListener;
@@ -15,7 +15,6 @@ import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import io.github.sylviameows.flask.registries.GameRegistryImpl;
 import io.github.sylviameows.flask.services.MessageService;
 import io.github.sylviameows.flask.services.world.FileWorldService;
-import io.github.sylviameows.flask.services.world.WorldService;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.Component;
@@ -26,6 +25,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -43,12 +43,11 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
 
     @Override
     public void onEnable() {
+        Holder.setInstance(this);
         instance = this;
         logger = getComponentLogger();
 
         var games = GameRegistryImpl.instance();
-        new ExampleGame(this).register("example");
-        logger.info("Registered game: "+games.get(this, "example").getSettings().getName());
 
         GameHologram.load();
 
@@ -85,9 +84,6 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
 
     public static MessageService getMessageService() {
         return messageService;
-    }
-    public static WorldService getWorldService() {
-        return worldService;
     }
     public static Flask getInstance() { // todo(): try to remove usages
         return instance;
@@ -136,6 +132,12 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
         };
     }
 
+    // API
+    @Override
+    public WorldService getWorldService() {
+        return worldService;
+    }
+
     @Override
     public GameRegistry getGameRegistry() {
         return GameRegistryImpl.instance();
@@ -144,6 +146,11 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
     @Override
     public PlayerManager getPlayerManager() {
         return PlayerManagerImpl.instance();
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return this;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package io.github.sylviameows.flask.examples;
+package io.github.sylviameows.duels.basic;
 
 import io.github.sylviameows.flask.api.game.Lobby;
 import io.github.sylviameows.flask.api.game.Phase;

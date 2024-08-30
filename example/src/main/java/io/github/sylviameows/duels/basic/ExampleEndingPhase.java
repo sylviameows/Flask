@@ -1,7 +1,6 @@
-package io.github.sylviameows.flask.examples;
+package io.github.sylviameows.duels.basic;
 
-import io.github.sylviameows.flask.Flask;
-import io.github.sylviameows.flask.Palette;
+import io.github.sylviameows.flask.api.Palette;
 import io.github.sylviameows.flask.api.game.Lobby;
 import io.github.sylviameows.flask.api.game.Phase;
 import net.kyori.adventure.key.Key;

@@ -7,6 +7,7 @@ import com.infernalsuite.aswm.api.loaders.SlimeLoader;
 import com.infernalsuite.aswm.api.world.SlimeWorld;
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap;
 import com.infernalsuite.aswm.loaders.file.FileLoader;
+import io.github.sylviameows.flask.api.services.WorldService;
 
 import java.io.File;
 import java.io.IOException;

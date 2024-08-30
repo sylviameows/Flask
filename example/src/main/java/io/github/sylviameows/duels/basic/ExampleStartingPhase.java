@@ -1,10 +1,9 @@
-package io.github.sylviameows.flask.examples;
+package io.github.sylviameows.duels.basic;
 
 import com.infernalsuite.aswm.api.world.SlimeWorld;
-import io.github.sylviameows.flask.Flask;
+import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.api.game.Lobby;
 import io.github.sylviameows.flask.api.game.Phase;
-import io.github.sylviameows.flask.services.MessageService;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
@@ -26,14 +25,15 @@ public class ExampleStartingPhase implements Phase {
         setupPlayer(playerA, Color.RED);
         setupPlayer(playerB, Color.AQUA);
 
-        var promise = Flask.getWorldService().findAndUseTemplate("example");
+        var promise = FlaskAPI.instance().getWorldService().findAndUseTemplate("example");
         Bukkit.getScheduler().runTaskAsynchronously(parent.getParent().getPlugin(), task -> {
             SlimeWorld slimeWorld;
             try {
                 slimeWorld = promise.get();
             } catch (InterruptedException | ExecutionException e) {
                 parent.closeLobby(player -> {
-                    Flask.getMessageService().sendMessage(player, MessageService.MessageType.ERROR, "template_doesnt_exist");
+                    player.sendRichMessage("<red>Template doesnt exist.");
+                    // todo: Flask.getMessageService().sendMessage(player, MessageService.MessageType.ERROR, "template_doesnt_exist");
                 });
                 return;
             }
