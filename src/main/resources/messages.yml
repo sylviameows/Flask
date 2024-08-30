@@ -7,13 +7,17 @@ prefix:
   error: "<red>🧪 › "
 
 errors:
+  unknown: "<red>An unknown error occurred."
   no_permission: "<red>You do not have permission to use that command. <gray>(%s)"
   occupied: "<red>You are currently occupied!"
   missing_arg: "<red>Missing the %s argument."
   no_queue: "<red>You are not in a queue!"
   game_doesnt_exist: "<red>Could not find the game \"%s\", are you sure it exists?"
   template_doesnt_exist: "<red>Template \"%s\" couldn't be found, are you sure it exists?"
+  no_hologram_los: "<red>You are not looking at a hologram!"
 messages:
+  created_hologram: "<white>Created a new hologram for <color:$mint>%s</color>!"
+  removed_hologram: "<white>Successfully removed the hologram in front of you!"
   queue:
     join: "<white>You are now in queue for <color:$mint>%s</color>!"
     leave: "<white>You are no longer in queue for <color:$mint>%s</color>!"

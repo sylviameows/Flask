@@ -2,6 +2,7 @@ package io.github.sylviameows.flask;
 
 import com.mojang.brigadier.Command;
 import io.github.sylviameows.flask.commands.TestCommand;
+import io.github.sylviameows.flask.commands.hologram.HologramCommand;
 import io.github.sylviameows.flask.commands.queue.QueueCommand;
 import io.github.sylviameows.flask.examples.ExampleGame;
 import io.github.sylviameows.flask.hub.holograms.GameHologram;
@@ -80,6 +81,7 @@ public class Flask extends JavaPlugin {
         lifecycle.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
             new QueueCommand().register(commands);
+            new HologramCommand().register(commands);
         });
     }
 

@@ -4,6 +4,7 @@ import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.game.Game;
 import io.github.sylviameows.flask.game.Settings;
 import io.github.sylviameows.flask.hub.holograms.tasks.GameHologramManagerTask;
+import io.github.sylviameows.flask.managers.HologramManager;
 import io.github.sylviameows.flask.registries.GameRegistry;
 import org.apache.commons.lang.NullArgumentException;
 import org.bukkit.*;
@@ -72,6 +73,8 @@ public class GameHologram {
 
         task = new GameHologramManagerTask(game, display);
         task.runTaskTimer(game.getPlugin(), 0L, 1L);
+
+        HologramManager.instance().add(uuid.toString(), this);
     }
 
     public GameHologram(Interaction interaction) throws NullArgumentException, IllegalArgumentException {
@@ -89,6 +92,8 @@ public class GameHologram {
 
             this.task = new GameHologramManagerTask(game, display);
             task.runTaskTimer(game.getPlugin(), 0L, 1L);
+
+            HologramManager.instance().add(uuid.toString(), this);
         } else {
             throw new IllegalArgumentException("Companion was not an item display!");
         }
@@ -106,6 +111,7 @@ public class GameHologram {
         display.remove();
         interaction.remove();
         task.getHolograms().forEach(Entity::remove);
+        task.cancel();
     }
 
     private void linkEntities(Entity a, Entity b) {
