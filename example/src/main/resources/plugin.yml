@@ -9,4 +9,4 @@ version: $version
 
 prefix: "Duels"
 depend:
-  - core
+  - flask-core
