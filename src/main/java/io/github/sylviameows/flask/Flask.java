@@ -80,7 +80,7 @@ public class Flask extends JavaPlugin {
         var lifecycle = this.getLifecycleManager();
         lifecycle.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
-            new QueueCommand().register(commands);
+            commands.register(new QueueCommand().build(), List.of("q")); // todo: figure out why this works but not the other way
             new HologramCommand().register(commands);
         });
     }

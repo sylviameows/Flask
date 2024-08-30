@@ -5,7 +5,7 @@ plugins {
 }
 
 description = "minigame wrapper plugin for 1.21.1"
-version = "0.4-ALPHA"
+version = "0.5-ALPHA"
 
 group = "io.github.sylviameows"
 
