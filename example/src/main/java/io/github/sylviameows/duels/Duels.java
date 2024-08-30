@@ -11,16 +11,9 @@ public final class Duels extends FlaskPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        var plugin = Bukkit.getPluginManager().getPlugin("core");
+        var plugin = Bukkit.getPluginManager().getPlugin("flask-core");
         if (plugin instanceof FlaskAPI api) {
-            getLogger().info("core");
             flask = api;
-        } else {
-            plugin = Bukkit.getPluginManager().getPlugin("flask");
-            if (plugin instanceof FlaskAPI api) {
-                getLogger().info("flask");
-                flask = api;
-            }
         }
 
         new ExampleGame(this).register("sword");

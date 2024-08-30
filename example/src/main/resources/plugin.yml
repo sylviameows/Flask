@@ -1,6 +1,12 @@
-name: duels
-version: '1.0-SNAPSHOT'
+# plugin information
+name: $name
+description: $description
 main: io.github.sylviameows.duels.Duels
-api-version: '1.21'
+api-version: $apiVersion
+authors:
+  - sylviameows
+version: $version
+
+prefix: "Duels"
 depend:
   - core

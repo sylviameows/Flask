@@ -3,10 +3,7 @@ plugins {
 //    id("io.papermc.paperweight.userdev") version "1.7.1" // paperweight userdev
 }
 
-description = "duels example plugin for flask"
-version = "0.1-ALPHA"
-
-group = "io.github.sylviameows"
+description = "example duels minigame designed for flask."
 
 repositories {
     mavenCentral()
@@ -18,7 +15,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-    compileOnly(project(":api"))
+    compileOnly(project(":flask-api"))
 
     compileOnly("com.infernalsuite.aswm:api:3.0.0-SNAPSHOT") // slime worlds api
 }

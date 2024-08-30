@@ -2,9 +2,6 @@ plugins {
     id("java")
 }
 
-group = "io.github.sylviameows"
-version = "0.5-ALPHA"
-
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/") // paper

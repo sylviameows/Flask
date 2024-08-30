@@ -2,7 +2,7 @@
 name: $name
 description: $description
 authors:
-  - msvae
+  - sylviameows
 version: $version
 
 # load information

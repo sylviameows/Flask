@@ -47,8 +47,6 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
         instance = this;
         logger = getComponentLogger();
 
-        var games = GameRegistryImpl.instance();
-
         GameHologram.load();
 
         RightClickEntity.register(this);

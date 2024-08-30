@@ -4,10 +4,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-description = "minigame wrapper plugin for 1.21.1"
-version = "0.5-ALPHA"
-
-group = "io.github.sylviameows"
+description = "minigame library plugin using slime worlds"
 
 repositories {
     mavenCentral()
@@ -19,7 +16,7 @@ repositories {
 dependencies {
     compileOnly("com.infernalsuite.aswm:api:3.0.0-SNAPSHOT") // slime worlds api
     compileOnly("com.infernalsuite.aswm:loaders:3.0.0-SNAPSHOT") // slime world loaders
-    implementation(project(":api"))
+    implementation(project(":flask-api"))
 
     paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT") // paper dependency
 }
