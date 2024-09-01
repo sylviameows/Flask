@@ -42,7 +42,7 @@ public class Queue<G extends Game> {
         if (queue.size() + 1 >= minimum && (task == null || task.isCancelled())) {
             queue.add(player);
 
-            var players = queue.subList(0, Math.min(maximum, queue.size() + 1));
+            var players = queue.subList(0, Math.min(maximum, queue.size()));
             task = new QueueTask(this, players);
             task.runTaskTimer(parent.getPlugin(), 0L, 20L);
             queue.removeAll(players);
