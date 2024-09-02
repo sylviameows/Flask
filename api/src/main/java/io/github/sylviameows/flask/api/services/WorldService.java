@@ -8,7 +8,9 @@ import com.infernalsuite.aswm.api.world.SlimeWorld;
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap;
 import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.api.util.SchedulerUtil;
+import io.github.sylviameows.flask.api.util.WorldProperties;
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
 import org.bukkit.event.world.WorldLoadEvent;
 
 import java.io.IOException;
@@ -61,7 +63,7 @@ public interface WorldService {
     default CompletableFuture<SlimeWorld> findAndUseTemplate(String templateName, String cloneName) {
         var promise = new CompletableFuture<SlimeWorld>();
 
-        var templatePromise = readWorldAsync(templateName, true, new SlimePropertyMap()); // todo: better properties?
+        var templatePromise = readWorldAsync(templateName, true, WorldProperties.defaultProperties()); // todo: better properties?
         templatePromise.whenComplete((template, exception) -> {
             if (exception != null || template == null) {
                 throw new RuntimeException(exception);

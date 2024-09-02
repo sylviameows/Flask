@@ -1,4 +1,4 @@
-package io.github.sylviameows.flask.services.world;
+package io.github.sylviameows.flask.api.util;
 
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap;
 

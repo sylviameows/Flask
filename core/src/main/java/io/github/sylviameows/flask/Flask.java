@@ -14,7 +14,7 @@ import io.github.sylviameows.flask.listeners.RightClickEntity;
 import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import io.github.sylviameows.flask.registries.GameRegistryImpl;
 import io.github.sylviameows.flask.services.MessageService;
-import io.github.sylviameows.flask.services.world.FileWorldService;
+import io.github.sylviameows.flask.services.FileWorldService;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.Component;

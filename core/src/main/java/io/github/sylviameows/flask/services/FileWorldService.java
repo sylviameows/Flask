@@ -1,4 +1,4 @@
-package io.github.sylviameows.flask.services.world;
+package io.github.sylviameows.flask.services;
 
 import com.infernalsuite.aswm.api.exceptions.CorruptedWorldException;
 import com.infernalsuite.aswm.api.exceptions.NewerFormatException;
