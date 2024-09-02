@@ -3,6 +3,7 @@ package io.github.sylviameows.flask.hub.holograms.tasks;
 import io.github.sylviameows.flask.Palette;
 import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.api.game.Settings;
+import io.github.sylviameows.flask.registries.GameRegistryImpl;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Color;
@@ -20,17 +21,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class GameHologramManagerTask extends BukkitRunnable {
-    private final Game game;
+    private Game game;
     private final ItemDisplay display;
     private final Map<String, TextDisplay> holograms = new HashMap<>();
+
+    private final NamespacedKey key;
+    private int loops = 0;
 
     public GameHologramManagerTask(Game game, ItemDisplay display) {
         this.game = game;
         this.display = display;
+
+        this.key = game.getKey();
+    }
+
+    /**
+     * registers as an unregistered hologram.
+     * @param key
+     * @param display
+     */
+    public GameHologramManagerTask(NamespacedKey key, ItemDisplay display) {
+        this.game = null;
+        this.display = display;
+
+        this.key = key;
     }
 
     @Override
     public void run() {
+        if (this.game == null) {
+            // tries to find the host game if it doesn't exist, otherwise holograms break.
+            // will only run every 20 ticks.
+            // possibly make this stop trying after a while?
+            loops++;
+
+            if (loops >= 20) loops = 0;
+            else if (loops == 0) {
+                this.game = GameRegistryImpl.instance().get(key);
+            }
+        }
+
         // spin item display
         Location location = display.getLocation();
         var yaw = location.getYaw() + 2;
@@ -99,6 +129,11 @@ public final class GameHologramManagerTask extends BukkitRunnable {
     }
 
     private Component getHologramComponent() {
+        if (game == null) {
+            return Component.text("could not find game: "+key.asString()).color(io.github.sylviameows.flask.api.Palette.RED_LIGHT);
+        }
+
+
         Settings settings = game.getSettings();
         return Component.text(settings.getName()).color(settings.getColor())
                 .append(Component.text(" • "+game.getQueue().getTotalPlayers()+" players").color(Palette.WHITE))

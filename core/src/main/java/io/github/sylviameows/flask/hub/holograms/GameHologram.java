@@ -59,7 +59,7 @@ public class GameHologram {
     }
 
     public GameHologram(Game game, Location location) throws IllegalArgumentException {
-        if (game.getKey() == null) throw new IllegalArgumentException("Provided game is not registered!");
+//        if (game.getKey() == null) throw new IllegalArgumentException("Provided game is not registered!");
         this.game = game;
         this.location = location.toCenterLocation().setDirection(new Vector(1,0,0));
 
@@ -90,7 +90,12 @@ public class GameHologram {
 
             this.uuid = interaction.getUniqueId();
 
-            this.task = new GameHologramManagerTask(game, display);
+            if (game != null) {
+                this.task = new GameHologramManagerTask(game, display);
+            } else {
+                this.task = new GameHologramManagerTask(NamespacedKey.fromString(gameKey), display);
+            }
+
             task.runTaskTimer(game.getPlugin(), 0L, 1L);
 
             HologramManager.instance().add(uuid.toString(), this);
