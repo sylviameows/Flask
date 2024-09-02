@@ -5,6 +5,7 @@ import net.kyori.adventure.text.format.TextColor;
 /**
  * Flask's custom palette, to create consistency.
  */
+@Deprecated
 public interface Palette {
     TextColor WHITE = TextColor.color(0xFFFFFF); // default
     TextColor GRAY = TextColor.color(0xAAAAAA); // default
