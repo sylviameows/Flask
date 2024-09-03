@@ -72,7 +72,7 @@ public class Queue<G extends Game> {
         }
     }
 
-    private void updateBar() {
+    public void updateBar() {
         Integer minimum = parent.getSettings().getMinPlayers();
         bar.progress((float) queue.size() / minimum);
 
@@ -92,6 +92,7 @@ public class Queue<G extends Game> {
             queue.forEach(p -> {
                 FlaskAPI.instance().getMessageService().sendMessage(p, MessageService.MessageType.QUEUE, "other_leave", player.getName());
             });
+            player.hideBossBar(bar);
             updateBar();
             if (task != null) task.remove(player);
             totalPlayers--;

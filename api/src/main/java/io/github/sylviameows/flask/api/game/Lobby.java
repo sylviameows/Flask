@@ -1,6 +1,8 @@
 package io.github.sylviameows.flask.api.game;
 
+import io.github.sylviameows.flask.api.FlaskAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -59,7 +61,18 @@ public class Lobby<G extends Game> {
         HandlerList.unregisterAll(phase);
 
         // todo: replace with a requeue feature?
-        players.forEach(parent.getQueue()::removePlayer);
+        players.forEach(player -> {
+            parent.getQueue().removePlayer(player);
+            player.teleportAsync(FlaskAPI.instance().getSpawnLocation());
+            player.setGameMode(GameMode.ADVENTURE);
+            player.setHealth(20.0);
+            player.setSaturation(10f);
+            player.setFoodLevel(20);
+        });
+
+        Bukkit.getScheduler().runTaskLater(FlaskAPI.instance().getPlugin(), () -> {
+            Bukkit.unloadWorld(world, false);
+        }, 200L);
     }
 
     public void closeLobby(Consumer<Player> consumer) {

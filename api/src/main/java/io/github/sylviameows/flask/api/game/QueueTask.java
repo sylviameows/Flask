@@ -100,6 +100,7 @@ public class QueueTask extends BukkitRunnable {
             parent.getQueue().addFirst(player);
             player.hideBossBar(bar);
             player.showBossBar(parent.getBar());
+            parent.updateBar();
         });
 
         this.cancel();
