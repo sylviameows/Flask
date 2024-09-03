@@ -41,12 +41,14 @@ public class Lobby<G extends Game> {
         var api = parent.getPlugin().getFlaskAPI();
         api.getPlayerManager().get(player).setLobby(this);
         players.add(player);
+        phase.onPlayerJoin(player);
     }
 
     public void removePlayer(Player player) {
         var api = parent.getPlugin().getFlaskAPI();
         api.getPlayerManager().get(player).setLobby(null);
         players.remove(player);
+        phase.onPlayerLeave(player);
     }
 
     public void closeLobby() {

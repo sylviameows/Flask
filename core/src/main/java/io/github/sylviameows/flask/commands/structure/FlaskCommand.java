@@ -5,6 +5,8 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.github.sylviameows.flask.Flask;
+import io.github.sylviameows.flask.api.FlaskAPI;
+import io.github.sylviameows.flask.api.services.MessageService;
 import io.github.sylviameows.flask.services.MessageServiceImpl;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FlaskCommand {
-    protected final MessageServiceImpl ms = Flask.getMessageService();
+    protected final MessageService ms = FlaskAPI.instance().getMessageService();
 
     String label;
     String[] aliases;
