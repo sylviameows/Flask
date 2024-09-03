@@ -4,6 +4,7 @@ import io.github.sylviameows.flask.api.manager.PlayerManager;
 import io.github.sylviameows.flask.api.registry.GameRegistry;
 import io.github.sylviameows.flask.api.services.MessageService;
 import io.github.sylviameows.flask.api.services.WorldService;
+import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -14,6 +15,8 @@ public interface FlaskAPI {
     MessageService getMessageService();
 
     Plugin getPlugin();
+
+    Location getSpawnLocation();
 
     static FlaskAPI instance() {
         return FlaskAPI.Holder.INSTANCE;

@@ -13,15 +13,24 @@ load: POSTWORLD
 
 # plugin permissions
 permissions:
+  # players
   flask.queue:
     description: "This allows players to join and leave queues."
-    default: not op
     children:
       - flask.queue.join
       - flask.queue.leave
   flask.queue.join:
     description: "This allows players to join a queue."
-    default: not op
   flask.queue.leave:
     description: "This allows players to leave a queue."
-    default: not op
+
+  # staff
+  flask.holograms:
+    description: "Allows a user to create and remove holograms."
+    children:
+      - flask.holograms.create
+      - flask.holograms.delete
+  flask.holograms.create:
+    description: "Allows a user to create a hologram at their feet."
+  flask.holograms.delete:
+    description: "Allows a user to delete the hologram infront of them."

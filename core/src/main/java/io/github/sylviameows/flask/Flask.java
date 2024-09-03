@@ -6,6 +6,7 @@ import io.github.sylviameows.flask.api.manager.PlayerManager;
 import io.github.sylviameows.flask.api.registry.GameRegistry;
 import io.github.sylviameows.flask.api.services.MessageService;
 import io.github.sylviameows.flask.api.services.WorldService;
+import io.github.sylviameows.flask.commands.SetSpawnCommand;
 import io.github.sylviameows.flask.commands.hologram.HologramCommand;
 import io.github.sylviameows.flask.commands.queue.QueueCommand;
 import io.github.sylviameows.flask.hub.holograms.GameHologram;
@@ -23,6 +24,7 @@ import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -50,6 +52,9 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
 
         GameHologram.load();
 
+        // loads default config.
+        saveResource("config.yml", false);
+
         RightClickEntity.register(this);
         JoinListener.register(this);
         LeaveListener.register(this);
@@ -76,8 +81,9 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
         var lifecycle = this.getLifecycleManager();
         lifecycle.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
-            commands.register(new QueueCommand().build(), List.of("q")); // todo: figure out why this works but not the other way
+            new QueueCommand().register(commands);
             new HologramCommand().register(commands);
+            new SetSpawnCommand().register(commands);
         });
     }
 
@@ -152,6 +158,16 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
     @Override
     public Plugin getPlugin() {
         return this;
+    }
+
+    @Override
+    public Location getSpawnLocation() {
+        Location location = getConfig().getLocation("spawn_location");
+        if (location != null) return location;
+
+        World world = Bukkit.getWorld("world");
+        if (world == null) world = Bukkit.getWorlds().getFirst();
+        return world.getSpawnLocation();
     }
 
     @Override
