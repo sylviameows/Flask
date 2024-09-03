@@ -1,5 +1,6 @@
 package io.github.sylviameows.flask.hub.holograms.tasks;
 
+import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.api.Palette;
 import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.api.game.Settings;
@@ -56,7 +57,7 @@ public final class GameHologramManagerTask extends BukkitRunnable {
             loops++;
 
             if (loops >= 20) loops = 0;
-            else if (loops == 0) {
+            if (loops == 0) {
                 this.game = GameRegistryImpl.instance().get(key);
             }
         }
@@ -80,9 +81,9 @@ public final class GameHologramManagerTask extends BukkitRunnable {
             TextDisplay hologram = spawnText();
             hologram.setVisibleByDefault(false);
 
-            new GameHologramShowTask(hologram, 20, game.getPlugin()).runTask(game.getPlugin());
+            new GameHologramShowTask(hologram, 20, Flask.getInstance()).runTask(Flask.getInstance());
 
-            player.showEntity(game.getPlugin(), hologram);
+            player.showEntity(Flask.getInstance(), hologram);
             holograms.put(player.getName(), hologram);
         }
 
@@ -93,7 +94,7 @@ public final class GameHologramManagerTask extends BukkitRunnable {
             if (nearbyPlayers.contains(name)) continue;
 
             TextDisplay hologram = holograms.get(name);
-            new GameHologramHideTask(hologram, 15, game.getPlugin()).runTask(game.getPlugin());
+            new GameHologramHideTask(hologram, 15, Flask.getInstance()).runTask(Flask.getInstance());
             holograms.remove(name);
         }
 

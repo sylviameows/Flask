@@ -20,4 +20,6 @@ messages:
   removed_hologram: "<white>Successfully removed the hologram in front of you!"
   queue:
     join: "<white>You are now in queue for <color:$mint>%s</color>!"
+    other_join: "<white><color:$mint>%s</color> joined the queue."
     leave: "<white>You are no longer in queue for <color:$mint>%s</color>!"
+    other_leave: "<white><color:$mint>%s</color> left the queue."

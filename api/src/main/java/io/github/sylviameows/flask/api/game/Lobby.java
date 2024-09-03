@@ -31,6 +31,9 @@ public class Lobby<G extends Game> {
         this.parent = parent;
         this.players = players;
 
+        var api = parent.getPlugin().getFlaskAPI();
+        players.forEach(player -> api.getPlayerManager().get(player).setLobby(this));
+
         this.phase = parent.initialPhase();
         Bukkit.getPluginManager().registerEvents(this.phase, parent.getPlugin());
         this.phase.onEnabled(this);

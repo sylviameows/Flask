@@ -26,6 +26,7 @@ public class LeaveListener implements Listener {
 
     private void handleDisconnect(Player player) {
         var flask = PlayerManagerImpl.instance().get(player);
+        if (flask == null) return;
         var game = flask.getGame();
         if (game != null) {
             game.getQueue().removePlayer(player);
@@ -33,9 +34,10 @@ public class LeaveListener implements Listener {
 
         var lobby = flask.getLobby();
         if (lobby != null) {
+            Flask.logger.info("removing from lobby with "+lobby.players);
             lobby.removePlayer(player);
+        } else {
+            Flask.logger.info("lobby was null");
         }
-
-        // todo get game and lobby and fire disconnect event.
     }
 }

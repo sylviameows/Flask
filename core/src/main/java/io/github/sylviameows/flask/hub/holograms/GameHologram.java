@@ -96,7 +96,7 @@ public class GameHologram {
                 this.task = new GameHologramManagerTask(NamespacedKey.fromString(gameKey), display);
             }
 
-            task.runTaskTimer(game.getPlugin(), 0L, 1L);
+            task.runTaskTimer(Flask.getInstance(), 0L, 1L);
 
             HologramManager.instance().add(uuid.toString(), this);
         } else {

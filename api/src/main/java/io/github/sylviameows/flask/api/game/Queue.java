@@ -1,7 +1,12 @@
 package io.github.sylviameows.flask.api.game;
 
+import io.github.sylviameows.flask.api.FlaskAPI;
+import io.github.sylviameows.flask.api.Palette;
 import io.github.sylviameows.flask.api.manager.PlayerManager;
 import io.github.sylviameows.flask.api.FlaskPlayer;
+import io.github.sylviameows.flask.api.services.MessageService;
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,11 +28,17 @@ public class Queue<G extends Game> {
 
     private final PlayerManager pm;
 
+    private BossBar bar;
+
     public Queue(G game) {
         this.parent = game;
         this.totalPlayers = 0;
         this.queue = new ArrayList<>();
         this.pm = parent.getPlugin().getFlaskAPI().getPlayerManager();
+
+        this.bar = BossBar.bossBar(Component.text("Waiting for ")
+                .append(Component.text(parent.getSettings().getMinPlayers()).color(Palette.MINT))
+                .append(Component.text(" more player(s)...")), 0f, BossBar.Color.BLUE, BossBar.Overlay.PROGRESS);
     }
 
     /**
@@ -39,10 +50,16 @@ public class Queue<G extends Game> {
 
         Integer minimum = parent.getSettings().getMinPlayers();
         Integer maximum = parent.getSettings().getMaxPlayers();
+
+        queue.forEach(p -> {
+            FlaskAPI.instance().getMessageService().sendMessage(p, MessageService.MessageType.QUEUE, "other_join", player.getName());
+        });
+
         if (queue.size() + 1 >= minimum && (task == null || task.isCancelled())) {
             queue.add(player);
 
             var players = queue.subList(0, Math.min(maximum, queue.size()));
+            players.forEach(p -> p.hideBossBar(bar));
             task = new QueueTask(this, players);
             task.runTaskTimer(parent.getPlugin(), 0L, 20L);
             queue.removeAll(players);
@@ -50,7 +67,18 @@ public class Queue<G extends Game> {
             task.add(player);
         } else {
             queue.add(player);
+            updateBar();
+            player.showBossBar(bar);
         }
+    }
+
+    private void updateBar() {
+        Integer minimum = parent.getSettings().getMinPlayers();
+        bar.progress((float) queue.size() / minimum);
+
+        bar.name(Component.text("Waiting for ")
+                .append(Component.text(parent.getSettings().getMinPlayers() - queue.size()).color(Palette.MINT))
+                .append(Component.text(" more player(s)...")));
     }
 
     /**
@@ -59,8 +87,12 @@ public class Queue<G extends Game> {
     public void removePlayer(Player player) {
         FlaskPlayer flaskPlayer = pm.get(player);
         if (flaskPlayer.getGame() == this.parent) {
-            flaskPlayer.reset();
+            flaskPlayer.setGame(null);
             queue.remove(player);
+            queue.forEach(p -> {
+                FlaskAPI.instance().getMessageService().sendMessage(p, MessageService.MessageType.QUEUE, "other_leave", player.getName());
+            });
+            updateBar();
             if (task != null) task.remove(player);
             totalPlayers--;
         }
@@ -108,5 +140,9 @@ public class Queue<G extends Game> {
 
     public G getParent() {
         return parent;
+    }
+
+    public BossBar getBar() {
+        return bar;
     }
 }
