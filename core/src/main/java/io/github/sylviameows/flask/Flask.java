@@ -4,6 +4,7 @@ import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.api.FlaskPlugin;
 import io.github.sylviameows.flask.api.manager.PlayerManager;
 import io.github.sylviameows.flask.api.registry.GameRegistry;
+import io.github.sylviameows.flask.api.services.MessageService;
 import io.github.sylviameows.flask.api.services.WorldService;
 import io.github.sylviameows.flask.commands.hologram.HologramCommand;
 import io.github.sylviameows.flask.commands.queue.QueueCommand;
@@ -13,7 +14,7 @@ import io.github.sylviameows.flask.listeners.LeaveListener;
 import io.github.sylviameows.flask.listeners.RightClickEntity;
 import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import io.github.sylviameows.flask.registries.GameRegistryImpl;
-import io.github.sylviameows.flask.services.MessageService;
+import io.github.sylviameows.flask.services.MessageServiceImpl;
 import io.github.sylviameows.flask.services.FileWorldService;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
@@ -37,7 +38,7 @@ import java.util.Random;
  */
 public class Flask extends FlaskPlugin implements FlaskAPI {
     public static ComponentLogger logger;
-    private static MessageService messageService;
+    private static MessageServiceImpl messageService;
     private static WorldService worldService;
     private static Flask instance;
 
@@ -53,7 +54,7 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
         JoinListener.register(this);
         LeaveListener.register(this);
 
-        Flask.messageService = new MessageService(this);
+        Flask.messageService = new MessageServiceImpl(this);
         Flask.worldService = new FileWorldService();
 
         // commands
@@ -80,9 +81,6 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
         });
     }
 
-    public static MessageService getMessageService() {
-        return messageService;
-    }
     public static Flask getInstance() { // todo(): try to remove usages
         return instance;
     }
@@ -144,6 +142,11 @@ public class Flask extends FlaskPlugin implements FlaskAPI {
     @Override
     public PlayerManager getPlayerManager() {
         return PlayerManagerImpl.instance();
+    }
+
+    @Override
+    public MessageService getMessageService() {
+        return messageService;
     }
 
     @Override

@@ -1,10 +1,11 @@
 package io.github.sylviameows.flask.listeners;
 
 import io.github.sylviameows.flask.Flask;
+import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import io.github.sylviameows.flask.registries.GameRegistryImpl;
-import io.github.sylviameows.flask.services.MessageService;
+import io.github.sylviameows.flask.services.MessageServiceImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -32,11 +33,11 @@ public class RightClickEntity implements Listener {
                     "hologram_interaction")
             ) return;
 
-            var ms = Flask.getMessageService();
+            var ms = FlaskAPI.instance().getMessageService();
 
             Player player = event.getPlayer();
             if (PlayerManagerImpl.instance().get(player).isOccupied()) {
-                ms.sendMessage(player, MessageService.MessageType.ERROR, "occupied");
+                ms.sendMessage(player, MessageServiceImpl.MessageType.ERROR, "occupied");
                 return;
             }
 
@@ -44,7 +45,7 @@ public class RightClickEntity implements Listener {
             if (gameKeyString == null) return;
             Game game = GameRegistryImpl.instance().get(NamespacedKey.fromString(gameKeyString));
             if (game == null) {
-                ms.sendMessage(player, MessageService.MessageType.ERROR, "game_doesnt_exist", gameKeyString);
+                ms.sendMessage(player, MessageServiceImpl.MessageType.ERROR, "game_doesnt_exist", gameKeyString);
                 return;
             }
 

@@ -6,7 +6,7 @@ import io.github.sylviameows.flask.commands.structure.FlaskCommand;
 import io.github.sylviameows.flask.commands.structure.types.GameArgumentType;
 import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.managers.PlayerManagerImpl;
-import io.github.sylviameows.flask.services.MessageService;
+import io.github.sylviameows.flask.services.MessageServiceImpl;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.entity.Player;
@@ -25,14 +25,14 @@ public class JoinSubcommand extends FlaskCommand {
     @Override
     public int execute(CommandContext<CommandSourceStack> context) {
         var source = context.getSource().getSender();
-        ms.sendMessage(source, MessageService.MessageType.ERROR, "missing_arg", "game");
+        ms.sendMessage(source, MessageServiceImpl.MessageType.ERROR, "missing_arg", "game");
         return 1;
     }
 
     public int executeWithArgs(CommandContext<CommandSourceStack> context, Game game) {
         if (context.getSource().getSender() instanceof Player player) {
             if (!canJoin(player)) {
-                ms.sendMessage(player, MessageService.MessageType.ERROR, "occupied");
+                ms.sendMessage(player, MessageServiceImpl.MessageType.ERROR, "occupied");
                 return 1;
             }
 

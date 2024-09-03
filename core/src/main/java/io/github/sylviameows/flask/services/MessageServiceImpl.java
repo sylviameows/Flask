@@ -2,6 +2,7 @@ package io.github.sylviameows.flask.services;
 
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.api.game.Game;
+import io.github.sylviameows.flask.api.services.MessageService;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.ComponentSerializer;
@@ -14,7 +15,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MessageService {
+public class MessageServiceImpl implements MessageService {
     private final FileConfiguration config;
     private final Map<String,String> colors = new HashMap<>();
     private ComponentSerializer<Component, ?, String> serializer;
@@ -22,7 +23,7 @@ public class MessageService {
     private Component prefix = Component.empty();
     private Component errorPrefix = Component.empty();
 
-    public MessageService(Flask flask) {
+    public MessageServiceImpl(Flask flask) {
         config = getConfig(flask);
 
 
@@ -92,10 +93,12 @@ public class MessageService {
         sender.sendMessage(component);
     }
 
+    @Override
     public void sendMessage(CommandSender sender, MessageType type, String key) {
         sendRawMessage(sender, type, getMessage(type, key));
     }
 
+    @Override
     public void sendMessage(CommandSender sender, MessageType type, String key, Object... params) {
         var raw = getMessage(type,key);
         raw = raw.replaceAll("\\$arg", "%s");
@@ -107,24 +110,5 @@ public class MessageService {
     public void sendQueueMessage(CommandSender sender, String key, Game game) {
         var name = game.getSettings().getName();
         sendMessage(sender, MessageType.STANDARD, "queue."+key, name);
-    }
-
-
-
-
-
-    public enum MessageType {
-        ERROR("errors."),
-        STANDARD("messages."),
-        QUEUE("messages.queue.");
-        private String value;
-
-        MessageType(String value) {
-            this.value = value;
-        }
-
-        String index() {
-            return value;
-        }
     }
 }

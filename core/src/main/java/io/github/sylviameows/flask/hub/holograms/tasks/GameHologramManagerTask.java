@@ -1,6 +1,6 @@
 package io.github.sylviameows.flask.hub.holograms.tasks;
 
-import io.github.sylviameows.flask.Palette;
+import io.github.sylviameows.flask.api.Palette;
 import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.api.game.Settings;
 import io.github.sylviameows.flask.registries.GameRegistryImpl;

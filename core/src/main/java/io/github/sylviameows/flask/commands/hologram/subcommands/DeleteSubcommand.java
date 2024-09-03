@@ -4,7 +4,7 @@ import com.mojang.brigadier.context.CommandContext;
 import io.github.sylviameows.flask.commands.structure.CommandProperties;
 import io.github.sylviameows.flask.commands.structure.FlaskCommand;
 import io.github.sylviameows.flask.managers.HologramManager;
-import io.github.sylviameows.flask.services.MessageService;
+import io.github.sylviameows.flask.services.MessageServiceImpl;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -24,17 +24,17 @@ public class DeleteSubcommand extends FlaskCommand {
         if (context.getSource().getSender() instanceof Player player) {
             var target = getLookingAt(player, 3.0);
             if (target == null) {
-                ms.sendMessage(player, MessageService.MessageType.ERROR, "no_hologram_los");
+                ms.sendMessage(player, MessageServiceImpl.MessageType.ERROR, "no_hologram_los");
                 return 1;
             }
 
             var hologram = HologramManager.instance().get(target.getUniqueId().toString());
             if (hologram == null) {
-                ms.sendMessage(player, MessageService.MessageType.ERROR, "unknown"); // todo: better name
+                ms.sendMessage(player, MessageServiceImpl.MessageType.ERROR, "unknown"); // todo: better name
                 return 1;
             }
             hologram.remove();
-            ms.sendMessage(player, MessageService.MessageType.STANDARD, "removed_hologram");
+            ms.sendMessage(player, MessageServiceImpl.MessageType.STANDARD, "removed_hologram");
 
             return 1;
         }
