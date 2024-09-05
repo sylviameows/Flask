@@ -3,6 +3,7 @@ package io.github.sylviameows.flask.api.game;
 import io.github.sylviameows.flask.api.Palette;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * These are the base settings of a minigame, which tells Flask how to
@@ -10,7 +11,7 @@ import org.bukkit.Material;
  * use the {@link SettingsBuilder} class to create this object which can
  * be created with the {@link Settings#builder()} method.
  */
-public class Settings {
+public final class Settings {
     // display options
     private final String name;
     private final String description;
@@ -29,6 +30,15 @@ public class Settings {
 
         this.maxPlayers = builder.maxPlayers;
         this.minPlayers = builder.minPlayers;
+    }
+
+    private Settings(String name, String description, TextColor color, Material material, Integer maxPlayers, Integer minPlayers) {
+        this.name = name;
+        this.description = description;
+        this.color = color;
+        this.icon = material;
+        this.maxPlayers = maxPlayers;
+        this.minPlayers = minPlayers;
     }
 
     public String getName() {
@@ -51,23 +61,28 @@ public class Settings {
         return minPlayers;
     }
 
-    /**
-     * @return an instance of {@link SettingsBuilder}.
-     */
+    @ApiStatus.Internal
+    public static Settings from(Game game) {
+        GameProperties props = game.getClass().getAnnotation(GameProperties.class);
+        if (props == null) {
+            throw new IllegalArgumentException("Provided game does not contain properties needed.");
+        }
+        return new Settings(
+                props.name(),
+                props.description(),
+                TextColor.color(props.color()),
+                props.material(),
+                props.min(),
+                props.max()
+        );
+    }
+
+
     public static SettingsBuilder builder() {
         return new SettingsBuilder();
     }
 
-    /**
-     * Generates a {@link Settings} object using the provided values.
-     * @param name a name to describe your game
-     * @param description a short description to explain your game
-     * @param color the "highlight" color to use
-     * @param icon the icon to use in new holograms
-     * @param max the maximum number of players per lobby
-     * @param min the minimum number of players per lobby
-     * @return a {@link Settings} object with the provided parameters.
-     */
+
     public static Settings of(String name, String description, TextColor color, Material icon, Integer max, Integer min) {
         return new SettingsBuilder()
                 .setName(name)
@@ -79,9 +94,7 @@ public class Settings {
                 .build();
     }
 
-    /**
-     * Builder class for the {@link Settings} object.
-     */
+
     public static class SettingsBuilder {
         // display options
         private String name = "Unknown";

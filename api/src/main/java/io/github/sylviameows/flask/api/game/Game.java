@@ -1,25 +1,30 @@
 package io.github.sylviameows.flask.api.game;
 
 import io.github.sylviameows.flask.api.FlaskPlugin;
-import io.github.sylviameows.flask.api.registry.GameRegistry;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
 
 public abstract class Game {
     private final FlaskPlugin plugin;
-    private Settings settings;
+    private final Settings settings;
     private final Queue<?> queue;
 
     private NamespacedKey key;
 
-    private Integer totalPlayers;
-
     protected Game(FlaskPlugin plugin, Settings settings) {
         this.plugin = plugin;
         this.settings = settings;
+
+        this.queue = new Queue<>(this);
+    }
+
+    @ApiStatus.Experimental
+    protected Game(FlaskPlugin plugin) {
+        this.plugin = plugin;
+        this.settings = Settings.from(this);
 
         this.queue = new Queue<>(this);
     }

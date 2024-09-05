@@ -1,36 +1,28 @@
 package io.github.sylviameows.duels.basic;
 
-import io.github.sylviameows.flask.api.Palette;
 import io.github.sylviameows.flask.api.FlaskPlugin;
-import io.github.sylviameows.flask.api.game.Game;
-import io.github.sylviameows.flask.api.game.Lobby;
-import io.github.sylviameows.flask.api.game.Phase;
-import io.github.sylviameows.flask.api.game.Settings;
+import io.github.sylviameows.flask.api.game.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@GameProperties(
+        name = "Sword Duel",
+        description = "Fight against another player using only a sword.",
+        color = 0x87ffdf, // mint color
+        material = Material.WOODEN_SWORD,
+        max = 2,
+        min = 2
+)
 public class ExampleGame extends Game {
-    private final List<Lobby<ExampleGame>> lobbies = new ArrayList<>();
-
     public ExampleGame(FlaskPlugin plugin) {
-        super(plugin, Settings.of(
-                "Sword Duel",
-                "Fight against another player using only a sword.",
-                Palette.MINT,
-                Material.WOODEN_SWORD,
-                2,
-                2
-        ));
+        super(plugin);
     }
 
     @Override
     public Lobby<ExampleGame> createLobby(List<Player> players) {
-        var lobby = new Lobby<>(this, players);
-        lobbies.add(lobby);
-        return lobby;
+        return new Lobby<>(this, players);
     }
 
     @Override
