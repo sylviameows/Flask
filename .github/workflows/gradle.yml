@@ -77,7 +77,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: 'v${{ env.version }}'
           prerelease: false
-          draft: true
+          draft: false
           title: 'Flask ${{ env.version }}'
           files: |
             *.jar
