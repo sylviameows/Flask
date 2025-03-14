@@ -13,3 +13,6 @@ allprojects {
     }
 }
 
+task("version") {
+    println(project.version);
+}
