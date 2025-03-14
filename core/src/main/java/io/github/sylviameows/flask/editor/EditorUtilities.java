@@ -3,7 +3,7 @@ package io.github.sylviameows.flask.editor;
 import io.github.sylviameows.flask.api.FlaskPlayer;
 import io.github.sylviameows.flask.api.annotations.MapProperty;
 import io.github.sylviameows.flask.api.game.Game;
-import io.github.sylviameows.flask.api.map.GameMap;
+import io.github.sylviameows.flask.api.game.map.GameMap;
 import io.github.sylviameows.flask.players.FlaskPlayerImpl;
 
 import java.lang.annotation.Annotation;

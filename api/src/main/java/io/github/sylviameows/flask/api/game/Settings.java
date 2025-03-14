@@ -2,7 +2,7 @@ package io.github.sylviameows.flask.api.game;
 
 import io.github.sylviameows.flask.api.Palette;
 import io.github.sylviameows.flask.api.annotations.GameProperties;
-import io.github.sylviameows.flask.api.map.GameMap;
+import io.github.sylviameows.flask.api.game.map.GameMap;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.jetbrains.annotations.ApiStatus;

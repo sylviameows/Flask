@@ -1,4 +1,4 @@
-package io.github.sylviameows.flask.api.map;
+package io.github.sylviameows.flask.api.game.map;
 
 /**
  * An empty map property, useful if you want to do fully custom map settings

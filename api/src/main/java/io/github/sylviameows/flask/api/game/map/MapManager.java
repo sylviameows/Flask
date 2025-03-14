@@ -7,7 +7,6 @@ import com.infernalsuite.aswm.api.world.SlimeWorld;
 import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.api.manager.Manager;
-import io.github.sylviameows.flask.api.map.GameMap;
 import io.github.sylviameows.flask.api.services.WorldService;
 import io.github.sylviameows.flask.api.util.SchedulerUtil;
 import io.github.sylviameows.flask.api.util.WorldProperties;

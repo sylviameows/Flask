@@ -3,7 +3,7 @@ package io.github.sylviameows.flask.players;
 import io.github.sylviameows.flask.api.FlaskPlayer;
 import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.api.game.Lobby;
-import io.github.sylviameows.flask.api.map.GameMap;
+import io.github.sylviameows.flask.api.game.map.GameMap;
 import io.github.sylviameows.flask.editor.EditorSession;
 import io.github.sylviameows.flask.managers.PlayerManagerImpl;
 import org.bukkit.entity.Player;

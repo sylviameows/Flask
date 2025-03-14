@@ -3,7 +3,7 @@ package io.github.sylviameows.flask.api.game;
 import io.github.sylviameows.flask.api.FlaskPlugin;
 import io.github.sylviameows.flask.api.game.map.MapManager;
 import io.github.sylviameows.flask.api.game.phase.Phase;
-import io.github.sylviameows.flask.api.map.GameMap;
+import io.github.sylviameows.flask.api.game.map.GameMap;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.ApiStatus;
 import java.util.List;
 
 public abstract class Game<T extends GameMap> {
+
     private final FlaskPlugin plugin;
     private final Settings<T> settings;
     private final Queue<?> queue;

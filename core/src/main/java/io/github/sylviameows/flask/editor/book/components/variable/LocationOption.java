@@ -1,7 +1,7 @@
 package io.github.sylviameows.flask.editor.book.components.variable;
 
 import io.github.sylviameows.flask.api.Palette;
-import io.github.sylviameows.flask.api.map.GameMap;
+import io.github.sylviameows.flask.api.game.map.GameMap;
 import io.github.sylviameows.flask.editor.book.components.button.BookButton;
 import io.github.sylviameows.flask.editor.book.components.button.ButtonStyle;
 import net.kyori.adventure.identity.Identity;

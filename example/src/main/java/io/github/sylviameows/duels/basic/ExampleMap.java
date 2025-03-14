@@ -1,6 +1,6 @@
 package io.github.sylviameows.duels.basic;
 
-import io.github.sylviameows.flask.api.map.FlaskMap;
+import io.github.sylviameows.flask.api.game.map.FlaskMap;
 import io.github.sylviameows.flask.api.annotations.MapProperty;
 import org.bukkit.Location;
 

@@ -1,4 +1,4 @@
-package io.github.sylviameows.flask.api.map;
+package io.github.sylviameows.flask.api.game.map;
 
 import io.github.sylviameows.flask.api.annotations.MapProperty;
 import org.bukkit.Location;

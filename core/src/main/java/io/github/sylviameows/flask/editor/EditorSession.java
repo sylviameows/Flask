@@ -4,7 +4,7 @@ import com.infernalsuite.aswm.api.world.SlimeWorld;
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.api.Palette;
 import io.github.sylviameows.flask.api.game.Game;
-import io.github.sylviameows.flask.api.map.GameMap;
+import io.github.sylviameows.flask.api.game.map.GameMap;
 import io.github.sylviameows.flask.api.services.WorldService;
 import io.github.sylviameows.flask.editor.book.EditorBook;
 import net.kyori.adventure.text.Component;

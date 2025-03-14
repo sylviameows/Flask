@@ -1,7 +1,7 @@
 package io.github.sylviameows.flask.editor.book;
 
 import io.github.sylviameows.flask.api.game.Game;
-import io.github.sylviameows.flask.api.map.GameMap;
+import io.github.sylviameows.flask.api.game.map.GameMap;
 import io.github.sylviameows.flask.editor.EditorUtilities;
 import io.github.sylviameows.flask.editor.book.components.variable.BookOption;
 import io.github.sylviameows.flask.editor.book.components.variable.BooleanOption;
