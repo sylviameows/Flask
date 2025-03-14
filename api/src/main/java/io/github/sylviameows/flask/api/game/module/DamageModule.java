@@ -35,12 +35,20 @@ public class DamageModule extends FlaskModule {
         return this;
     }
 
-    public static DamageModule prevent(EntityDamageEvent.DamageCause cause) {
-        return new DamageModule(false).add(cause);
+    public static DamageModule prevent(EntityDamageEvent.DamageCause... causes) {
+        DamageModule module = new DamageModule(false);
+        for (EntityDamageEvent.DamageCause cause : causes) {
+            module.add(cause);
+        }
+        return module;
     }
 
-    public static DamageModule allow(EntityDamageEvent.DamageCause cause) {
-        return new DamageModule(true).add(cause);
+    public static DamageModule allow(EntityDamageEvent.DamageCause... causes) {
+        DamageModule module = new DamageModule(true);
+        for (EntityDamageEvent.DamageCause cause : causes) {
+            module.add(cause);
+        }
+        return module;
     }
 
     public static DamageModule invulnerable() {
