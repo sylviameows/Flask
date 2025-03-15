@@ -7,78 +7,98 @@ on:
     branches: [ "main" ]
 
 permissions:
-  id-token: "write"
-  contents: "write"
-  packages: "write"
-  pull-requests: "read"
+    id-token: "write"
+    contents: "write"
+    packages: "write"
+    pull-requests: "read"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
-      trigger: ${{ steps.trigger.outputs.release }}
+      type: ${{ steps.trigger.outputs.type }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
-      - name: Build with Gradle
-        run: ./gradlew build
-        # store the build version to check if this is a new version at release.
-      - name: Expose Version
-        if: ${{ github.event_name == 'push' }}
-        id: version
-        run: echo "version=$(${{github.workspace}}/gradlew -q version )" >> $GITHUB_OUTPUT
-      - name: Sort Build
-        run: |
-          mkdir ./output/
-          mv ./api/build/libs/flask-api-*.jar ./output/flask-api-${{steps.version.outputs.version}}.jar
-          mv ./core/build/libs/flask-core-*-all.jar ./output/flask-core-${{steps.version.outputs.version}}.jar
-          mv ./example/build/libs/example-*.jar ./output/example-${{steps.version.outputs.version}}.jar
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Flask
-          path: ./output/*.jar
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+    - name: Build with Gradle
+      run: ./gradlew build
+      # store the build version to check if this is a new version at release.
+    - name: Expose Version
+      if: ${{ github.event_name == 'push' }}
+      id: version
+      run: echo "version=$(${{github.workspace}}/gradlew -q version )" >> $GITHUB_OUTPUT
+    - name: Sort Build
+      env:
+        version: ${{ steps.version.outputs.version }}
+      run: |
+        mkdir ./output/
+        mv ./api/build/libs/flask-api-*.jar ./output/flask-api-${{ env.version }}.jar
+        mv ./core/build/libs/flask-core-*-all.jar ./output/flask-core-${{ env.version }}.jar
+        mv ./example/build/libs/example-*.jar ./output/example-${{ env.version }}.jar
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Flask
+        path: ./output/*.jar
 
-      # check if a version tag exists for this version
-      - name: Check Update
-        if: ${{ github.event_name == 'push' }}
-        uses: mukunku/tag-exists-action@v1.6.0
-        id: check-tag
-        with:
-          tag: v${{steps.version.outputs.version}}
-      - name: Trigger Release
-        id: trigger
-        if: ${{ steps.check-tag.outputs.exists == 'false' }}
-        run: echo "release=true" >> $GITHUB_OUTPUT
+    # check if a version tag exists for this version
+    # - name: Parse Version
+    #   id: parsed
+    #   if: ${{ github.event_name == 'push' }}
+    #   env:
+    #     version: ${{ steps.version.outputs.version }}
+    #   run: echo "result=$(echo ${version//-SNAPSHOT/})" >> $GITHUB_OUTPUT
+    - name: Check Update
+      if: ${{ github.event_name == 'push' }}
+      uses: mukunku/tag-exists-action@v1.6.0
+      id: check-tag
+      with: 
+        tag: v${{ steps.version.outputs.version }}
+    - name: Trigger Release
+      id: trigger
+      env: 
+        # is the version a snapshot release?
+        snapshot: ${{ contains(steps.version.outputs.version, 'SNAPSHOT') }}
+      # if it is, then we can trigger a release with the type snapshot.
+      if: ${{ steps.check-tag.outputs.exists == 'false' || env.snapshot == 'true' }}
+      run: echo "type=${{env.snapshot == 'true' && 'snapshot' || 'release' }}" >> $GITHUB_OUTPUT
 
   release:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ needs.build.outputs.trigger == 'true' }}
+    if: ${{ needs.build.outputs.type != '' }}
     env:
       # obtained from build action.
       version: ${{ needs.build.outputs.version }}
+      type: ${{ needs.build.outputs.type }}
     steps:
-      # download the artifact generated from building.
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: Flask
-      - name: Publish Release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: 'v${{ env.version }}'
-          prerelease: false
-          draft: false
-          title: 'Flask ${{ env.version }}'
-          files: |
-            *.jar
+    # download the artifact generated from building.
+    - name: Download Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: Flask
+    - name: Delete Version Beta
+      if: ${{ env.type == 'release' }}
+      uses: ClementTsang/delete-tag-and-release@v0.3.1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        delete_release: true
+        tag_name: 'v${{ env.version }}-SNAPSHOT'
+    - name: Publish Release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: 'v${{ env.version }}'
+        prerelease: ${{ env.type == 'snapshot' }}
+        title: "Flask ${{ env.type == 'snapshot' && 'Beta ' || '' }}${{ env.version }}"
+        files: |
+          *.jar
 
