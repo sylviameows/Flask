@@ -20,7 +20,7 @@ public class QueueTask extends BukkitRunnable {
     private final int max;
     private final int min;
 
-    private BossBar bar;
+    private final BossBar bar;
 
     public QueueTask(Queue<?> queue, List<Player> players) {
         this.players = new ArrayList<>(players); // clones the list
@@ -40,7 +40,7 @@ public class QueueTask extends BukkitRunnable {
     }
 
     public boolean add(Player player) {
-        if (players.size() >= parent.getParent().getSettings().getMaxPlayers()) {
+        if (players.size() >= this.max) {
             return false;
         }
         players.forEach(p -> {

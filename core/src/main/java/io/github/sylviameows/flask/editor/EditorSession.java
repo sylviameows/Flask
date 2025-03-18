@@ -1,6 +1,6 @@
 package io.github.sylviameows.flask.editor;
 
-import com.infernalsuite.aswm.api.world.SlimeWorld;
+import com.infernalsuite.asp.api.world.SlimeWorld;
 import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.api.Palette;
 import io.github.sylviameows.flask.api.game.Game;

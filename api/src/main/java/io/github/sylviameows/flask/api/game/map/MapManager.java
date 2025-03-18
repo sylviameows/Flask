@@ -1,9 +1,9 @@
 package io.github.sylviameows.flask.api.game.map;
 
-import com.infernalsuite.aswm.api.exceptions.CorruptedWorldException;
-import com.infernalsuite.aswm.api.exceptions.NewerFormatException;
-import com.infernalsuite.aswm.api.exceptions.UnknownWorldException;
-import com.infernalsuite.aswm.api.world.SlimeWorld;
+import com.infernalsuite.asp.api.exceptions.CorruptedWorldException;
+import com.infernalsuite.asp.api.exceptions.NewerFormatException;
+import com.infernalsuite.asp.api.exceptions.UnknownWorldException;
+import com.infernalsuite.asp.api.world.SlimeWorld;
 import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.api.game.Game;
 import io.github.sylviameows.flask.api.manager.Manager;

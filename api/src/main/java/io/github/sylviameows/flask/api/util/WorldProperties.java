@@ -1,7 +1,7 @@
 package io.github.sylviameows.flask.api.util;
 
-import com.infernalsuite.aswm.api.world.properties.SlimeProperties;
-import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap;
+import com.infernalsuite.asp.api.world.properties.SlimeProperties;
+import com.infernalsuite.asp.api.world.properties.SlimePropertyMap;
 
 public class WorldProperties {
     private final double[] coords = new double[]{0.5,64,0.5,0,0}; // x,y,z,pitch,yaw

@@ -14,8 +14,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.infernalsuite.aswm:api:3.0.0-SNAPSHOT") // slime worlds api
-    implementation("com.infernalsuite.aswm:loaders:3.0.0-SNAPSHOT") // slime world loaders
+    compileOnly("com.infernalsuite.asp:api:4.0.0-SNAPSHOT") // slime worlds api
+    implementation("com.infernalsuite.asp:file-loader:4.0.0-SNAPSHOT") // slime world loaders
     implementation(project(":flask-api"))
 
     paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT") // paper dependency

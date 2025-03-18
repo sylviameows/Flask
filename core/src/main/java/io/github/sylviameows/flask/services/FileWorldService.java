@@ -1,12 +1,13 @@
 package io.github.sylviameows.flask.services;
 
-import com.infernalsuite.aswm.api.exceptions.CorruptedWorldException;
-import com.infernalsuite.aswm.api.exceptions.NewerFormatException;
-import com.infernalsuite.aswm.api.exceptions.UnknownWorldException;
-import com.infernalsuite.aswm.api.loaders.SlimeLoader;
-import com.infernalsuite.aswm.api.world.SlimeWorld;
-import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap;
-import com.infernalsuite.aswm.loaders.file.FileLoader;
+import com.infernalsuite.asp.api.exceptions.CorruptedWorldException;
+import com.infernalsuite.asp.api.exceptions.NewerFormatException;
+import com.infernalsuite.asp.api.exceptions.UnknownWorldException;
+import com.infernalsuite.asp.api.loaders.SlimeLoader;
+import com.infernalsuite.asp.api.world.SlimeWorld;
+import com.infernalsuite.asp.api.world.properties.SlimePropertyMap;
+import com.infernalsuite.asp.loaders.file.FileLoader;
+import io.github.sylviameows.flask.Flask;
 import io.github.sylviameows.flask.api.services.WorldService;
 import io.github.sylviameows.flask.api.util.SchedulerUtil;
 import org.bukkit.Bukkit;
@@ -19,7 +20,7 @@ import java.io.IOException;
 public class FileWorldService implements WorldService {
     private final SlimeLoader loader;
 
-    private final String ROOT_DIRECTORY = "flask_worlds";
+    private final String ROOT_DIRECTORY = Flask.getInstance().getPlugin().getDataPath()+"/.maps";
 
     public FileWorldService() {
         var directory = new File(ROOT_DIRECTORY);

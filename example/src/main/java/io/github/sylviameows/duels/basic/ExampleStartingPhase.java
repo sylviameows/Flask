@@ -1,6 +1,6 @@
 package io.github.sylviameows.duels.basic;
 
-import com.infernalsuite.aswm.api.world.SlimeWorld;
+import com.infernalsuite.asp.api.world.SlimeWorld;
 import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.api.game.phase.ListenerPhase;
 import io.github.sylviameows.flask.api.game.phase.Phase;

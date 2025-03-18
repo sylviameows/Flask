@@ -1,11 +1,11 @@
 package io.github.sylviameows.flask.api.services;
 
-import com.infernalsuite.aswm.api.AdvancedSlimePaperAPI;
-import com.infernalsuite.aswm.api.exceptions.CorruptedWorldException;
-import com.infernalsuite.aswm.api.exceptions.NewerFormatException;
-import com.infernalsuite.aswm.api.exceptions.UnknownWorldException;
-import com.infernalsuite.aswm.api.world.SlimeWorld;
-import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap;
+import com.infernalsuite.asp.api.AdvancedSlimePaperAPI;
+import com.infernalsuite.asp.api.exceptions.CorruptedWorldException;
+import com.infernalsuite.asp.api.exceptions.NewerFormatException;
+import com.infernalsuite.asp.api.exceptions.UnknownWorldException;
+import com.infernalsuite.asp.api.world.SlimeWorld;
+import com.infernalsuite.asp.api.world.properties.SlimePropertyMap;
 import io.github.sylviameows.flask.api.FlaskAPI;
 import io.github.sylviameows.flask.api.util.SchedulerUtil;
 import io.github.sylviameows.flask.api.util.WorldProperties;
